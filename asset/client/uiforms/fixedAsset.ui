@@ -1,0 +1,1291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <comment>This file is part of the xTuple ERP: PostBooks Edition, a free and
+open source Enterprise Resource Planning software suite,
+Copyright (c) 1999-2010 by OpenMFG LLC, d/b/a xTuple.
+It is licensed to you under the Common Public Attribution License
+version 1.0, the full text of which (including xTuple-specific Exhibits)
+is available at www.xtuple.com/CPAL.  By using this software, you agree
+to be bound by its terms.</comment>
+ <class>fixedAsset</class>
+ <widget class="QWidget" name="fixedAsset">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>781</width>
+    <height>553</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Fixed Asset</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="Screen" name="_fixedAsset">
+     <property name="schemaName">
+      <string>asset</string>
+     </property>
+     <property name="tableName">
+      <string>vw_fixed_asset</string>
+     </property>
+     <property name="mode">
+      <enum>Screen::New</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_6">
+      <item row="0" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <layout class="QGridLayout" name="gridLayout_2">
+            <item row="0" column="0">
+             <widget class="XLabel" name="_assetCodeLit">
+              <property name="text">
+               <string>Code/Tag:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="XLabel" name="_assetNameLit">
+              <property name="text">
+               <string>Description:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="XLineEdit" name="_assetName">
+              <property name="minimumSize">
+               <size>
+                <width>300</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="fieldName">
+               <string>asset_name</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="XLabel" name="_assetTypeLit">
+              <property name="text">
+               <string>Asset Type:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="XLabel" name="_assetStatusLit">
+              <property name="text">
+               <string>Status:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="3">
+             <widget class="XComboBox" name="_assetType">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="allowNull">
+               <bool>false</bool>
+              </property>
+              <property name="fieldName">
+               <string>asset_type_code</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="3">
+             <widget class="XComboBox" name="_assetStatus">
+              <property name="minimumSize">
+               <size>
+                <width>150</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="allowNull">
+               <bool>false</bool>
+              </property>
+              <property name="fieldName">
+               <string>asset_status_code</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout">
+              <item>
+               <widget class="XLineEdit" name="_assetCode">
+                <property name="focusPolicy">
+                 <enum>Qt::StrongFocus</enum>
+                </property>
+                <property name="fieldName">
+                 <string>asset_code</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item row="2" column="3">
+             <widget class="XCheckBox" name="_print">
+              <property name="text">
+               <string>Print on Save</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="XComboBox" name="_parent">
+              <property name="minimumSize">
+               <size>
+                <width>300</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>300</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="allowNull">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="XLabel" name="_parentLit">
+              <property name="text">
+               <string>Parent Asset:</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QPushButton" name="_close">
+            <property name="text">
+             <string>&amp;Close</string>
+            </property>
+            <property name="shortcut">
+             <string>Esc</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="_save">
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
+            </property>
+            <property name="text">
+             <string>Save</string>
+            </property>
+            <property name="shortcut">
+             <string>Ctrl+S</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item row="2" column="0">
+       <widget class="QGroupBox" name="groupBox_3">
+        <property name="title">
+         <string>Asset Details</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_7">
+         <item row="0" column="0">
+          <layout class="QGridLayout" name="gridLayout_3">
+           <item row="0" column="0">
+            <widget class="XLabel" name="_assetBrandLit">
+             <property name="text">
+              <string>Brand:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="XComboBox" name="_asset_brand">
+             <property name="focusPolicy">
+              <enum>Qt::StrongFocus</enum>
+             </property>
+             <property name="editable">
+              <bool>true</bool>
+             </property>
+             <property name="maxCount">
+              <number>2147483646</number>
+             </property>
+             <property name="allowNull">
+              <bool>true</bool>
+             </property>
+             <property name="fieldName">
+              <string/>
+             </property>
+             <property name="listSchemaName">
+              <string/>
+             </property>
+             <property name="listTableName">
+              <string/>
+             </property>
+             <property name="listIdFieldName">
+              <string/>
+             </property>
+             <property name="listDisplayFieldName">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="XLabel" name="_assetModelLit">
+             <property name="text">
+              <string>Model:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="XLineEdit" name="_asset_model">
+             <property name="focusPolicy">
+              <enum>Qt::StrongFocus</enum>
+             </property>
+             <property name="fieldName">
+              <string>asset_model</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="XLabel" name="_assetBarcodeLit">
+             <property name="text">
+              <string>Barcode:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="XLineEdit" name="_asset_barcode">
+             <property name="focusPolicy">
+              <enum>Qt::StrongFocus</enum>
+             </property>
+             <property name="fieldName">
+              <string>asset_barcode</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="XLabel" name="_assetSerialLit">
+             <property name="text">
+              <string>Serial #:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <widget class="XLineEdit" name="_asset_serial">
+             <property name="focusPolicy">
+              <enum>Qt::StrongFocus</enum>
+             </property>
+             <property name="fieldName">
+              <string>asset_serial</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QTabWidget" name="_tab">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>1</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <property name="elideMode">
+         <enum>Qt::ElideLeft</enum>
+        </property>
+        <widget class="QWidget" name="tab">
+         <attribute name="title">
+          <string>Purchase</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_8">
+          <item row="0" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout_9">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_5">
+              <item>
+               <layout class="QGridLayout" name="gridLayout_4">
+                <item row="0" column="0">
+                 <widget class="XLabel" name="_assetVendorLit">
+                  <property name="text">
+                   <string>Vendor:</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="VendorLineEdit" name="_vendorcode">
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <widget class="XLabel" name="_purchPriceLit">
+                  <property name="text">
+                   <string>Purch Place:</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="3">
+                 <widget class="XLineEdit" name="_purchase_place">
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
+                  </property>
+                  <property name="fieldName">
+                   <string>asset_purch_place</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="XLabel" name="_purchDateLit">
+                  <property name="text">
+                   <string>Purchase Date:</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="DLineEdit" name="_purchdate">
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
+                  </property>
+                  <property name="defaultDate">
+                   <enum>XDateEdit::Current</enum>
+                  </property>
+                  <property name="fieldName">
+                   <string>asset_purch_date</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="2">
+                 <widget class="XLabel" name="_installDateLit">
+                  <property name="text">
+                   <string>Install Date:</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="3">
+                 <widget class="DLineEdit" name="_installdate">
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
+                  </property>
+                  <property name="defaultDate">
+                   <enum>XDateEdit::Current</enum>
+                  </property>
+                  <property name="fieldName">
+                   <string>asset_install_date</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="XLabel" name="_purchPriceLit_2">
+                  <property name="text">
+                   <string>Asset Cost:</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="CurrCluster" name="_purchprice">
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
+                  </property>
+                  <property name="baseVisible">
+                   <bool>false</bool>
+                  </property>
+                  <property name="currencyDisabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="currencyEditable" stdset="0">
+                   <bool>true</bool>
+                  </property>
+                  <property name="currencyVisible">
+                   <bool>false</bool>
+                  </property>
+                  <property name="fieldNameCurr">
+                   <string>asset_purch_price</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="2">
+                 <widget class="XLabel" name="_residualLit">
+                  <property name="text">
+                   <string>Residual Value:</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="3">
+                 <widget class="CurrCluster" name="_residualvalue">
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
+                  </property>
+                  <property name="baseVisible">
+                   <bool>false</bool>
+                  </property>
+                  <property name="currencyVisible">
+                   <bool>false</bool>
+                  </property>
+                  <property name="fieldNameCurr">
+                   <string>asset_residual_value</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="2">
+                 <widget class="XLabel" name="_lifeLit">
+                  <property name="text">
+                   <string>Asset Life:</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="3">
+                 <layout class="QHBoxLayout" name="horizontalLayout_3">
+                  <item>
+                   <widget class="XSpinBox" name="_assetlife">
+                    <property name="focusPolicy">
+                     <enum>Qt::StrongFocus</enum>
+                    </property>
+                    <property name="fieldName">
+                     <string>asset_life</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="XLabel" name="_lifeUnitLit">
+                    <property name="text">
+                     <string>years</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <spacer name="verticalSpacer_4">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>0</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>0</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab2">
+         <attribute name="title">
+          <string>Location</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_11">
+          <item row="0" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout_8">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_4">
+              <item>
+               <widget class="AddressCluster" name="_address">
+                <property name="focusPolicy">
+                 <enum>Qt::StrongFocus</enum>
+                </property>
+                <property name="fieldNameAddressChange" stdset="0">
+                 <string/>
+                </property>
+                <property name="fieldNameNumber">
+                 <string>asset_address</string>
+                </property>
+                <property name="fieldNameLine1">
+                 <string>addr_line1</string>
+                </property>
+                <property name="fieldNameLine2">
+                 <string>addr_line2</string>
+                </property>
+                <property name="fieldNameLine3">
+                 <string>addr_line3</string>
+                </property>
+                <property name="fieldNameCity">
+                 <string>addr_city</string>
+                </property>
+                <property name="fieldNameState">
+                 <string>addr_state</string>
+                </property>
+                <property name="fieldNamePostalCode">
+                 <string>addr_postalcode</string>
+                </property>
+                <property name="fieldNameCountry">
+                 <string>addr_country</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="verticalSpacer_3">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>0</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_6">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab3">
+         <attribute name="title">
+          <string>Notes</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_12">
+          <item row="0" column="0">
+           <widget class="XTextEdit" name="_notes">
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
+            <property name="fieldName">
+             <string>asset_comments</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_2">
+         <attribute name="title">
+          <string>Maintenance</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_13">
+          <item row="0" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout_7">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_3">
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <item>
+                 <widget class="XLabel" name="_lastServiceLit">
+                  <property name="text">
+                   <string>Last Service:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="DLineEdit" name="_last_service">
+                  <property name="fieldName">
+                   <string>asset_last_service</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <spacer name="verticalSpacer_2">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_5">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout_6">
+        <item>
+         <layout class="QGridLayout" name="gridLayout_5">
+          <item row="0" column="2">
+           <widget class="XLabel" name="_retireLit">
+            <property name="text">
+             <string>Asset Retire Date:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="DLineEdit" name="_asset_retire">
+            <property name="fieldName">
+             <string>asset_retire_date</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="XLabel" name="_dispositionLit">
+            <property name="text">
+             <string>Disposition Reason:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="XComboBox" name="_asset_disposition">
+            <property name="allowNull">
+             <bool>true</bool>
+            </property>
+            <property name="fieldName">
+             <string>asset_disposition</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="XLabel" name="_warrantyLit">
+            <property name="text">
+             <string>Warranty:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="DLineEdit" name="_warranty_exp">
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
+            <property name="fieldName">
+             <string>asset_warranty_exp</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="XLabel" name="_warranty_exp_lit">
+            <property name="text">
+             <string>Warranty Expiry:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="XSpinBox" name="_warranty">
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="maximum">
+               <number>10000</number>
+              </property>
+              <property name="fieldName">
+               <string>asset_warranty_mth</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="XLabel" name="_warrantyExpiryUnitLit">
+              <property name="text">
+               <string>Months</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>AddressCluster</class>
+   <extends>QWidget</extends>
+   <header>addresscluster.h</header>
+  </customwidget>
+  <customwidget>
+   <class>CurrCluster</class>
+   <extends>CurrDisplay</extends>
+   <header>currcluster.h</header>
+  </customwidget>
+  <customwidget>
+   <class>CurrDisplay</class>
+   <extends>QWidget</extends>
+   <header>currcluster.h</header>
+  </customwidget>
+  <customwidget>
+   <class>DLineEdit</class>
+   <extends>QWidget</extends>
+   <header>datecluster.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Screen</class>
+   <extends>QWidget</extends>
+   <header>screen.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>VendorLineEdit</class>
+   <extends>XLineEdit</extends>
+   <header>vendorlineedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>XCheckBox</class>
+   <extends>QCheckBox</extends>
+   <header>xcheckbox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>XComboBox</class>
+   <extends>QComboBox</extends>
+   <header>xcombobox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>XLabel</class>
+   <extends>QLabel</extends>
+   <header>xlabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>XLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>xlineedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>XSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>xspinbox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>XTextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>xtextedit.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>_assetCode</tabstop>
+  <tabstop>_assetName</tabstop>
+  <tabstop>_assetType</tabstop>
+  <tabstop>_assetStatus</tabstop>
+  <tabstop>_parent</tabstop>
+  <tabstop>_asset_brand</tabstop>
+  <tabstop>_asset_model</tabstop>
+  <tabstop>_asset_barcode</tabstop>
+  <tabstop>_asset_serial</tabstop>
+  <tabstop>_tab</tabstop>
+  <tabstop>_vendorcode</tabstop>
+  <tabstop>_purchase_place</tabstop>
+  <tabstop>_purchdate</tabstop>
+  <tabstop>_installdate</tabstop>
+  <tabstop>_purchprice</tabstop>
+  <tabstop>_residualvalue</tabstop>
+  <tabstop>_assetlife</tabstop>
+  <tabstop>_warranty</tabstop>
+  <tabstop>_warranty_exp</tabstop>
+  <tabstop>_address</tabstop>
+  <tabstop>_notes</tabstop>
+  <tabstop>_save</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>_close</sender>
+   <signal>clicked()</signal>
+   <receiver>fixedAsset</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>335</x>
+     <y>31</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>246</x>
+     <y>7</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_fixedAsset</sender>
+   <signal>newDataWidgetMapper(XDataWidgetMapper*)</signal>
+   <receiver>_assetCode</receiver>
+   <slot>setDataWidgetMap(XDataWidgetMapper*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>155</x>
+     <y>18</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_fixedAsset</sender>
+   <signal>newDataWidgetMapper(XDataWidgetMapper*)</signal>
+   <receiver>_assetName</receiver>
+   <slot>setDataWidgetMap(XDataWidgetMapper*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>264</x>
+     <y>48</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_fixedAsset</sender>
+   <signal>newDataWidgetMapper(XDataWidgetMapper*)</signal>
+   <receiver>_assetStatus</receiver>
+   <slot>setDataWidgetMap(XDataWidgetMapper*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>554</x>
+     <y>48</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_fixedAsset</sender>
+   <signal>newDataWidgetMapper(XDataWidgetMapper*)</signal>
+   <receiver>_assetType</receiver>
+   <slot>setDataWidgetMap(XDataWidgetMapper*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>554</x>
+     <y>18</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_fixedAsset</sender>
+   <signal>newDataWidgetMapper(XDataWidgetMapper*)</signal>
+   <receiver>_assetlife</receiver>
+   <slot>setDataWidgetMap(XDataWidgetMapper*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>419</x>
+     <y>128</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_fixedAsset</sender>
+   <signal>newDataWidgetMapper(XDataWidgetMapper*)</signal>
+   <receiver>_warranty</receiver>
+   <slot>setDataWidgetMap(XDataWidgetMapper*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>584</x>
+     <y>158</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_fixedAsset</sender>
+   <signal>newDataWidgetMapper(XDataWidgetMapper*)</signal>
+   <receiver>_purchdate</receiver>
+   <slot>setDataWidgetMap(XDataWidgetMapper*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>194</x>
+     <y>130</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_fixedAsset</sender>
+   <signal>newDataWidgetMapper(XDataWidgetMapper*)</signal>
+   <receiver>_installdate</receiver>
+   <slot>setDataWidgetMap(XDataWidgetMapper*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>409</x>
+     <y>100</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_fixedAsset</sender>
+   <signal>newDataWidgetMapper(XDataWidgetMapper*)</signal>
+   <receiver>_address</receiver>
+   <slot>setDataWidgetMap(XDataWidgetMapper*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>270</x>
+     <y>287</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_fixedAsset</sender>
+   <signal>newDataWidgetMapper(XDataWidgetMapper*)</signal>
+   <receiver>_warranty_exp</receiver>
+   <slot>setDataWidgetMap(XDataWidgetMapper*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>389</x>
+     <y>423</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_fixedAsset</sender>
+   <signal>newDataWidgetMapper(XDataWidgetMapper*)</signal>
+   <receiver>_asset_brand</receiver>
+   <slot>setDataWidgetMap(XDataWidgetMapper*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>164</x>
+     <y>98</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_fixedAsset</sender>
+   <signal>newDataWidgetMapper(XDataWidgetMapper*)</signal>
+   <receiver>_asset_model</receiver>
+   <slot>setDataWidgetMap(XDataWidgetMapper*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>135</x>
+     <y>128</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_fixedAsset</sender>
+   <signal>newDataWidgetMapper(XDataWidgetMapper*)</signal>
+   <receiver>_asset_barcode</receiver>
+   <slot>setDataWidgetMap(XDataWidgetMapper*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>569</x>
+     <y>98</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_fixedAsset</sender>
+   <signal>newDataWidgetMapper(XDataWidgetMapper*)</signal>
+   <receiver>_asset_serial</receiver>
+   <slot>setDataWidgetMap(XDataWidgetMapper*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>569</x>
+     <y>128</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_fixedAsset</sender>
+   <signal>newDataWidgetMapper(XDataWidgetMapper*)</signal>
+   <receiver>_purchase_place</receiver>
+   <slot>setDataWidgetMap(XDataWidgetMapper*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>501</x>
+     <y>221</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_fixedAsset</sender>
+   <signal>newDataWidgetMapper(XDataWidgetMapper*)</signal>
+   <receiver>_asset_retire</receiver>
+   <slot>setDataWidgetMap(XDataWidgetMapper*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>209</x>
+     <y>213</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_fixedAsset</sender>
+   <signal>newDataWidgetMapper(XDataWidgetMapper*)</signal>
+   <receiver>_asset_disposition</receiver>
+   <slot>setDataWidgetMap(XDataWidgetMapper*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>211</x>
+     <y>241</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_fixedAsset</sender>
+   <signal>newDataWidgetMapper(XDataWidgetMapper*)</signal>
+   <receiver>_last_service</receiver>
+   <slot>setDataWidgetMap(XDataWidgetMapper*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>189</x>
+     <y>213</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_fixedAsset</sender>
+   <signal>newDataWidgetMapper(XDataWidgetMapper*)</signal>
+   <receiver>_purchprice</receiver>
+   <slot>setDataWidgetMap(XDataWidgetMapper*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>374</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>221</x>
+     <y>343</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_fixedAsset</sender>
+   <signal>newDataWidgetMapper(XDataWidgetMapper*)</signal>
+   <receiver>_residualvalue</receiver>
+   <slot>setDataWidgetMap(XDataWidgetMapper*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>374</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>505</x>
+     <y>343</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

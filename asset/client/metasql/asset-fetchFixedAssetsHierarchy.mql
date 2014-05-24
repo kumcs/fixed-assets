@@ -1,0 +1,23 @@
+-- Group: asset
+-- Name:  fetchFixedAssetsHierarchy
+-- Notes: Display List of Assets in a hierarchy
+select h.id, h.altid, h.value as asset_code, asset_name, assettype_name as asset_type, (level - 1) as xtindentrole
+FROM (
+SELECT  CASE WHEN (((q.h).node).parent = 0) THEN ((q.h).node).id ELSE ((q.h).node).parent END as id,
+  ((q.h).node).id as altid,
+  ((q.h).node).value,
+  (q.h).level
+  FROM    (
+  SELECT  asset.fn_hierarchy_connect_by(0, 1) AS h
+) AS q) as h
+JOIN asset.asset ON h.altid = asset.id
+JOIN asset.asset_type ON asset.asset_type=asset_type.id
+WHERE (true)
+<? if exists("search") ?>
+AND (asset_code LIKE <? value("search") ?>
+OR asset_name LIKE <? value("search") ?>)
+<? endif ?>
+<? if exists("show_retired") ?>
+AND NOT asset_status = <? value("show_retired") ?>
+<? endif ?>
+order by asset.hierarchy_parent(h.altid),h.id, xtindentrole
