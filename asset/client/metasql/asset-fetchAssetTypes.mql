@@ -1,0 +1,9 @@
+-- Group: asset
+-- Name:  fetchAssetTypes
+-- Notes: Fetch list of Fixed Asset Types
+select a.*, d.depn_name 
+from asset.asset_type a
+join asset.asset_depn d
+on a.assettype_depn = d.depn_id
+where (a.assettype_code LIKE <? value("search") ?>)
+OR (a.assettype_name LIKE <? value("search") ?>);

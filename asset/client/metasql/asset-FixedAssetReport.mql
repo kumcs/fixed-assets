@@ -1,0 +1,26 @@
+-- Group: asset
+-- Name:  FixedAssetReport
+-- Notes: Full Asset Details for Reporting
+SELECT vw.*, 
+       formatDate(vw.asset_purch_date) as purch_date,
+       formatDate(vw.asset_install_date) as install_date,
+       formatDate(vw.asset_retire_date) as retire_date,
+       formatDate(vw.asset_warranty_exp) as warranty_expiry,
+       formatMoney(vw.asset_purch_price) as purchase_price,
+       formatMoney(vw.asset_bookvalue) as book_value,
+       t.assettype_code || ' - ' || t.assettype_name as f_asset_type
+FROM asset.vw_fixed_asset vw
+JOIN asset.asset_type t
+ON vw.asset_type=t.id
+WHERE (1=1)
+<? if exists("search") ?>
+AND (asset_code LIKE <? value("search") ?>
+OR asset_name LIKE <? value("search") ?>)
+<? endif ?>
+<? if exists("code") ?>
+AND asset_code = <? value("code") ?>
+<? endif ?>
+<? if exists("asset") ?>
+AND vw.id = <? value("asset") ?>
+<? endif ?>
+ORDER BY asset_type_code, asset_code;
