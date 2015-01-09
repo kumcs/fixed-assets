@@ -42,26 +42,24 @@ function prepare()
 
 function populate()
 {
-  if (_assetType.mode == _editMode)
-  {
-   var p = new Object();
-   p.assettype = _assettypeid;
-   var d=toolbox.executeQuery("SELECT * FROM asset.asset_type WHERE id = <? value(\"assettype\") ?>", p);
-   if (d.first())
-   {
-     _assetCode.text = d.value("assettype_code");
-     _assetName.text = d.value("assettype_name");
-     _depnperc.localValue = d.value("assettype_depnperc");
-     _glFixedAsset.setId(d.value("assettype_gl1"));
-     _glAccumDepn.setId(d.value("assettype_gl2"));
-     _glDepnExp.setId(d.value("assettype_gl3"));
-     _glGainLoss.setId(d.value("assettype_gl4"));
-     _glScrap.setId(d.value("assettype_gl5"));
-   }
-   _assetCode.enabled = false;
-   _assetDepn.enabled = false;
-   _depnperc.enabled = false;
+  var p = new Object();
+  p.assettype = _assettypeid;
+  var d=toolbox.executeQuery("SELECT * FROM asset.asset_type WHERE id = <? value(\"assettype\") ?>", p);
+  if (d.first()){
+    _assetCode.text = d.value("assettype_code");
+    _assetName.text = d.value("assettype_name");
+    _assetDepn.setId(d.value("assettype_depn"));
+    _depnperc.text = d.value("assettype_depnperc");
+    _glFixedAsset.setId(d.value("assettype_gl1"));
+    _glAccumDepn.setId(d.value("assettype_gl2"));
+    _glDepnExp.setId(d.value("assettype_gl3"));
+    _glGainLoss.setId(d.value("assettype_gl4"));
+    _glScrap.setId(d.value("assettype_gl5"));
   }
+
+  _assetCode.enabled = false;
+  _assetDepn.enabled = false;
+  _depnperc.enabled = false;
 }
 
 function set(input)
