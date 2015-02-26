@@ -23,13 +23,10 @@ _new.enabled = privileges.check("MaintainFixedAsset");
 _type.populate("SELECT id, assettype_code FROM asset.asset_type ORDER BY 2");
 
 _showRetired.clicked.connect(fillList);
-//mainwindow.tick.connect(fillList);
 mainwindow["salesOrdersUpdated(int, bool)"].connect(fillList);
 
 with (_results)
 {
- // addColumn("ID",  10, 1, false, "id");
- // addColumn("altId",  10, 1, false, "altId");
   addColumn("Code",  -1, 1, true, "asset_code");
   addColumn("Description / Sub-Asset",  -1, 1, true, "asset_name");
   addColumn("Asset Type",  -1, 1, true, "asset_type");
@@ -161,14 +158,14 @@ function checkEditprivs()
 
 function printReport()
 {
-   toolbox.printReport("FixedAssetList", getParams());
+   toolbox.printReport("FixedAssetList", getParams(), true);
 }
 
 function printAsset()
 {
  var aparams = new Object();
  aparams.asset = _results.id();
- toolbox.printReport("FixedAssetDetail", aparams);
+ toolbox.printReport("FixedAssetDetail", aparams, true);
 }
 
 function getParams()
@@ -180,7 +177,7 @@ function getParams()
    params.show_retired = 5;
 
  if (_search.text != null)
-   params.search = "%" + _search.text + "%";
+   params.search = _search.text;
 
  if(_type.id() != -1)
   params.type = _type.id();

@@ -12,6 +12,7 @@ toolbox.menuInsertSeparator(accntsMenu, reptMenu);
 // Add Asset actions
 var newAction = assetMenu.addAction(qsTr("New..."), mainwindow);
 var listAction = assetMenu.addAction(qsTr("List..."), mainwindow);
+var locationAction = assetMenu.addAction(qsTr("By Location..."), mainwindow);
 assetMenu.addSeparator();
 var typesAction = assetMenu.addAction(qsTr("Types..."), mainwindow);
 var dispsAction = assetMenu.addAction(qsTr("Dispositions..."), mainwindow);
@@ -23,6 +24,10 @@ newAction.enabled = privileges.value("MaintainFixedAsset");
 listAction.objectName = "fa.list_asset";
 listAction.setData("ViewFixedAsset");
 listAction.enabled = privileges.value("ViewFixedAsset");
+
+locationAction.objectName = "fa.asset_location";
+locationAction.setData("ViewFixedAsset");
+locationAction.enabled = privileges.value("ViewFixedAsset");
 
 typesAction.objectName = "fa.asset_types";
 typesAction.setData("ViewAssetType");
@@ -44,28 +49,28 @@ function sNewAsset()
 
 function sListAssets()
 {
-  var param = new Object;
   var wind = toolbox.openWindow("assetList", mainwindow);
-  wind.set(param);
+}
+
+function sListAssetLocations()
+{
+  var wind = toolbox.newDisplay("dspAssetLocation");
 }
 
 function sAssetTypes()
 {
-  var param = new Object;
   var wind = toolbox.openWindow("assetTypeList", mainwindow);
-  wind.set(param);
 }
 
 function sAssetDisp()
 {
-  var param = new Object;
   var wind = toolbox.openWindow("assetDispList", mainwindow);
-  wind.set(param);
 }
 
 // Connect Action(s)
 newAction.triggered.connect(sNewAsset);
 listAction.triggered.connect(sListAssets);
+locationAction.triggered.connect(sListAssetLocations);
 typesAction.triggered.connect(sAssetTypes);
 dispsAction.triggered.connect(sAssetDisp);
 

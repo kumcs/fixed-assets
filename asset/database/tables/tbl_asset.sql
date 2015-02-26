@@ -98,6 +98,7 @@ BEGIN
 		          ON UPDATE NO ACTION ON DELETE NO ACTION;';
     EXECUTE _statement;
   END IF;
+  
 -- Check existence of Item ID field in table  
   IF (EXISTS(SELECT column_name
                FROM information_schema.columns 
@@ -114,6 +115,29 @@ BEGIN
                REFERENCES item (item_id) MATCH SIMPLE
                ON UPDATE NO ACTION ON DELETE NO ACTION;';
     EXECUTE _statement;
+  END IF; 
+
+-- Release 1.4.0 Check existence of CRM Account and Location ID field in table  
+  IF (EXISTS(SELECT column_name
+               FROM information_schema.columns 
+               WHERE table_schema = 'asset' 
+               AND table_name='asset' 
+               AND column_name='asset_crmacct_id')) THEN
+                
+      -- Do Nothing
+      
+  ELSE              
+ -- Create CRM Account and Location Columns
+    _statement = 'ALTER TABLE asset.asset ADD COLUMN asset_crmacct_id integer, 
+                      ADD COLUMN asset_location_id integer,
+		       ADD CONSTRAINT fk_asset_crmacct_id FOREIGN KEY (asset_crmacct_id)
+               REFERENCES crmacct (crmacct_id) MATCH SIMPLE
+               ON UPDATE NO ACTION ON DELETE NO ACTION,
+		       ADD CONSTRAINT fk_asset_location_id FOREIGN KEY (asset_location_id)
+               REFERENCES location (location_id) MATCH SIMPLE
+               ON UPDATE NO ACTION ON DELETE NO ACTION;';
+    EXECUTE _statement;
   END IF;  
+   
 END;
 $$;
