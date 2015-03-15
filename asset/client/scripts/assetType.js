@@ -24,6 +24,7 @@ _close.clicked.connect(close);
 _save.clicked.connect(saveAsset);
 
 _assetDepn.populate("SELECT depn_id as id, depn_name as name from asset.asset_depn ORDER BY depn_id");
+_depnperc.setValidator(mainwindow.percentVal());
 
 _accounts.enabled = asset.checkDepn();
 _depreciation.enabled = asset.checkDepn();
@@ -49,7 +50,7 @@ function populate()
     _assetCode.text = d.value("assettype_code");
     _assetName.text = d.value("assettype_name");
     _assetDepn.setId(d.value("assettype_depn"));
-    _depnperc.text = d.value("assettype_depnperc");
+    _depnperc.setDouble(d.value("assettype_depnperc"));
     _glFixedAsset.setId(d.value("assettype_gl1"));
     _glAccumDepn.setId(d.value("assettype_gl2"));
     _glDepnExp.setId(d.value("assettype_gl3"));
