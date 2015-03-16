@@ -1,14 +1,14 @@
 <package id="asset"
          name="asset"
-         developer="Anderson.NET New Zealand"
+         developer="Pentuple New Zealand"
          descrip="Fixed Assets"
-         version="1.2.3"
+         version="1.4.0"
          updater="2.2.4">
   <pkgnotes>Fixed Asset Register add-on package for xTuple ERP.
 
         This file is part of the Fixed Asset package for xTuple ERP: PostBooks Edition,
         a free and open source Enterprise Resource Planning software suite,
-        Copyright (c) 2010-2014 by Pentuple Consulting Ltd. (New Zealand) www.pentuple.co.nz.
+        Copyright (c) 2010-2015 by Pentuple Consulting Ltd. (New Zealand) www.pentuple.co.nz.
         It is licensed to you under the Common Public Attribution License
         version 1.0, the full text of which (including xTuple-specific Exhibits)
         is available at www.xtuple.com/CPAL.  By using this software, you agree
@@ -16,15 +16,15 @@
   </pkgnotes>
 
   <prerequisite type="Query"
-                name="xTuple ERP version">
+                name="Check xTuple ERP version">
     <query>
-      SELECT (SUBSTRING(fetchMetricText('ServerVersion') FOR 1) > '3') 
-          OR (SUBSTRING(fetchMetricText('ServerVersion') FOR 1) = '3'
-          AND SUBSTRING(fetchMetricText('ServerVersion') FROM 3 FOR 1) >= '8');
+      SELECT (SUBSTRING(fetchMetricText('ServerVersion') FOR 1) > '4') 
+          OR (SUBSTRING(fetchMetricText('ServerVersion') FOR 1) = '4'
+          AND SUBSTRING(fetchMetricText('ServerVersion') FROM 3 FOR 1) >= '4');
     </query>
     <message>
       This version of the Fixed Asset package only works with xTuple ERP
-      versions 3.8.0 and greater.
+      versions 4.4.0 and greater.
     </message>
   </prerequisite>
 
@@ -33,7 +33,7 @@
       &lt;p>
           This file is part of the Fixed Asset package for xTuple ERP: PostBooks Edition,
           a free and open source Enterprise Resource Planning software suite,
-	  Copyright (c) 2010-2014 by Pentuple Consulting Ltd. (New Zealand) www.pentuple.co.nz.
+	        Copyright (c) 2010-2015 by Pentuple Consulting Ltd. (New Zealand) www.pentuple.co.nz.
           It is licensed to you under the Common Public Attribution License
           version 1.0, the full text of which (including xTuple-specific Exhibits)
           is available at www.xtuple.com/CPAL.  By using this software, you agree
@@ -69,52 +69,55 @@
   <script file="database/misc/schemaComment.sql" />
   <script file="database/misc/asset_list_type.sql" />
 
-  <createtable file="database/tables/tbl_asset_status.sql"          name="asset_status"/>
-  <createtable file="database/tables/tbl_asset_type.sql"          name="asset_type"/>
+  <createtable file="database/tables/tbl_asset_status.sql"     name="asset_status"/>
+  <createtable file="database/tables/tbl_asset_type.sql"       name="asset_type"/>
   <createtable file="database/tables/tbl_asset_depn.sql"       name="asset_depn"/>
-  <createtable file="database/tables/tbl_asset_disp.sql"           name="asset_disp"/>
-  <createtable file="database/tables/tbl_asset.sql"      name="asset"/>
+  <createtable file="database/tables/tbl_asset_disp.sql"       name="asset_disp"/>
+  <createtable file="database/tables/tbl_asset.sql"            name="asset"/>
 
   <createview file="database/views/vw_fixed_asset.sql"          name="vw_fixed_asset"/>
   <createview file="database/views/vw_asset_type.sql"          name="vw_asset_type"/>
+  <createview file="database/views/new_fixed_asset.sql"          name="new_fixed_asset"/>
 
-  <loadappscript file="client/scripts/asset.js"              name="asset"     order="0" >Fixed Assets</loadappscript>
-  <loadappscript file="client/scripts/assetDisp.js"              name="assetDisp"     order="0" >Fixed Assets</loadappscript>
-  <loadappscript file="client/scripts/assetDispList.js"            	name="assetDispList"     order="0" >Fixed Assets</loadappscript>
-  <loadappscript file="client/scripts/assetList.js"                  name="assetList"         order="0" >Fixed Assets</loadappscript>
-  <loadappscript file="client/scripts/assetType.js"           	name="assetType"    	    order="0" >Fixed Assets</loadappscript>
-  <loadappscript file="client/scripts/assetTypeList.js"             	name="assetTypeList"           order="0" >Fixed Assets</loadappscript>
-  <loadappscript file="client/scripts/fixedAsset.js"             name="fixedAsset"    order="0" >Fixed Assets</loadappscript>
-  <loadappscript file="client/scripts/initMenu.js"               name="initMenu"      order="2" >Fixed Assets</loadappscript>
+  <loadappscript file="client/scripts/asset.js"              name="asset"           order="0" >Fixed Assets</loadappscript>
+  <loadappscript file="client/scripts/assetDisp.js"          name="assetDisp"       order="0" >Fixed Assets</loadappscript>
+  <loadappscript file="client/scripts/assetDispList.js"      name="assetDispList"   order="0" >Fixed Assets</loadappscript>
+  <loadappscript file="client/scripts/assetList.js"          name="assetList"       order="0" >Fixed Assets</loadappscript>
+  <loadappscript file="client/scripts/assetType.js"          name="assetType"       order="0" >Fixed Assets</loadappscript>
+  <loadappscript file="client/scripts/dspAssetLocation.js"   name="dspAssetLocation"  order="0" >Fixed Assets</loadappscript>
+  <loadappscript file="client/scripts/assetTypeList.js"      name="assetTypeList"   order="0" >Fixed Assets</loadappscript>
+  <loadappscript file="client/scripts/fixedAsset.js"         name="fixedAsset"    order="0" >Fixed Assets</loadappscript>
+  <loadappscript file="client/scripts/initMenu.js"           name="initMenu"      order="2" >Fixed Assets</loadappscript>
 
   <loadimage      file="client/images/depreciation_info_48.png" name="depreciation_info_48"/>
   <loadimage      file="client/images/asset_add_48.png" name="asset_add_48"/> 
   <loadimage      file="client/images/asset_management_32.png" name="asset_management_32"/>
 
-  <loadappui file="client/uiforms/assetDisp.ui"                   order="0" >Fixed Assets</loadappui>
-  <loadappui file="client/uiforms/assetDispList.ui"                        order="0" >Fixed Assets</loadappui>
-  <loadappui file="client/uiforms/assetList.ui"       		order="0" >Fixed Assets</loadappui>
-  <loadappui file="client/uiforms/assetType.ui"       	order="0" >Fixed Assets</loadappui>
-  <loadappui file="client/uiforms/assetTypeList.ui"                   order="0" >Fixed Assets</loadappui>
-  <loadappui file="client/uiforms/fixedAsset.ui"              order="0" >Fixed Assets</loadappui>
-  <loadappui file="client/uiforms/desktopAssetManagement.ui"              order="0" >Fixed Assets</loadappui>
+  <loadappui file="client/uiforms/assetDisp.ui"              order="0" >Fixed Assets</loadappui>
+  <loadappui file="client/uiforms/assetDispList.ui"          order="0" >Fixed Assets</loadappui>
+  <loadappui file="client/uiforms/assetList.ui"       	     order="0" >Fixed Assets</loadappui>
+  <loadappui file="client/uiforms/assetType.ui"       	     order="0" >Fixed Assets</loadappui>
+  <loadappui file="client/uiforms/assetTypeList.ui"          order="0" >Fixed Assets</loadappui>
+  <loadappui file="client/uiforms/fixedAsset.ui"             order="0" >Fixed Assets</loadappui>
+  <loadappui file="client/uiforms/desktopAssetManagement.ui" order="0" >Fixed Assets</loadappui>
   
   <loadmetasql file="client/metasql/asset-fetchAssetTypes.mql" >Fixed Assets</loadmetasql>
   <loadmetasql file="client/metasql/asset-fetchFixedAsset.mql" >Fixed Assets</loadmetasql>
   <loadmetasql file="client/metasql/asset-fetchFixedAssets.mql" >Fixed Assets</loadmetasql>
   <loadmetasql file="client/metasql/asset-fetchFixedAssetsHierarchy.mql" >Fixed Assets</loadmetasql>
+  <loadmetasql file="client/metasql/asset-fetchFixedAssetsLocation.mql" >Fixed Assets</loadmetasql>
   <loadmetasql file="client/metasql/asset-FixedAssetReport.mql" >Fixed Assets</loadmetasql>
   <loadmetasql file="client/metasql/asset-insertFixedAsset.mql" >Fixed Assets</loadmetasql>
   <loadmetasql file="client/metasql/asset-updateFixedAsset.mql" >Fixed Assets</loadmetasql>
   
   <loadreport  file="client/reports/FixedAssetByType.xml" >Fixed Assets</loadreport>
   <loadreport  file="client/reports/FixedAssetDetail.xml" >Fixed Assets</loadreport>
+  <loadreport  file="client/reports/FixedAssetByLocation.xml" >Fixed Assets</loadreport>
 
   <finalscript file="database/misc/asset_depn.sql" />
   <finalscript file="database/misc/asset_status.sql" />
   <finalscript file="database/misc/asset_disp.sql" />
   <finalscript file="database/misc/tidyup_menu.sql" />
   <finalscript file="database/functions/hierarchy_functions.sql" name="fn_hierarchy_connect_by"/>
-  <finalscript file="database/misc/asset_upgrade_12.sql" />
 
 </package>

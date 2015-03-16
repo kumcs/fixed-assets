@@ -14,8 +14,8 @@ JOIN asset.asset ON h.altid = asset.id
 JOIN asset.asset_type ON asset.asset_type=asset_type.id
 WHERE (true)
 <? if exists("search") ?>
-AND (asset_code LIKE <? value("search") ?>
-OR asset_name LIKE <? value("search") ?>)
+AND (asset_code ~* <? value("search") ?>
+OR asset_name ~* <? value("search") ?>)
 <? endif ?>
 <? if exists("show_retired") ?>
 AND NOT asset_status = <? value("show_retired") ?>

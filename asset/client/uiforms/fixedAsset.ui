@@ -13,8 +13,8 @@ to be bound by its terms.</comment>
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>781</width>
-    <height>553</height>
+    <width>752</width>
+    <height>608</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -370,7 +370,7 @@ to be bound by its terms.</comment>
          <enum>Qt::StrongFocus</enum>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <property name="elideMode">
          <enum>Qt::ElideLeft</enum>
@@ -600,68 +600,142 @@ to be bound by its terms.</comment>
           <item row="0" column="0">
            <layout class="QHBoxLayout" name="horizontalLayout_8">
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout_4">
-              <item>
-               <widget class="AddressCluster" name="_address">
-                <property name="focusPolicy">
-                 <enum>Qt::StrongFocus</enum>
-                </property>
-                <property name="fieldNameAddressChange" stdset="0">
-                 <string/>
-                </property>
-                <property name="fieldNameNumber">
-                 <string>asset_address</string>
-                </property>
-                <property name="fieldNameLine1">
-                 <string>addr_line1</string>
-                </property>
-                <property name="fieldNameLine2">
-                 <string>addr_line2</string>
-                </property>
-                <property name="fieldNameLine3">
-                 <string>addr_line3</string>
-                </property>
-                <property name="fieldNameCity">
-                 <string>addr_city</string>
-                </property>
-                <property name="fieldNameState">
-                 <string>addr_state</string>
-                </property>
-                <property name="fieldNamePostalCode">
-                 <string>addr_postalcode</string>
-                </property>
-                <property name="fieldNameCountry">
-                 <string>addr_country</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="verticalSpacer_3">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>0</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
+             <widget class="QGroupBox" name="_acctGrp">
+              <property name="toolTip">
+               <string>The CRM Account the Asset is located at</string>
+              </property>
+              <property name="title">
+               <string>Internal Location</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_7">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_10">
+                 <item>
+                  <widget class="XLabel" name="_locationLit">
+                   <property name="text">
+                    <string>Location:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="XComboBox" name="_location">
+                   <property name="minimumSize">
+                    <size>
+                     <width>200</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="allowNull">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_6">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <spacer name="verticalSpacer_6">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
             </item>
             <item>
-             <spacer name="horizontalSpacer_6">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+             <widget class="QGroupBox" name="_locationGrp">
+              <property name="toolTip">
+               <string>The physical address the Asset is located</string>
               </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
+              <property name="title">
+               <string>External Location: Account / Address</string>
               </property>
-             </spacer>
+              <layout class="QVBoxLayout" name="verticalLayout_6">
+               <item>
+                <widget class="CRMAcctCluster" name="_crmacct">
+                 <property name="label">
+                  <string>Account:</string>
+                 </property>
+                 <property name="fieldName">
+                  <string>asset_crmacct_id</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="XLabel" name="_addressLit">
+                 <property name="text">
+                  <string>Address:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="AddressCluster" name="_address">
+                 <property name="focusPolicy">
+                  <enum>Qt::StrongFocus</enum>
+                 </property>
+                 <property name="fieldNameAddressChange" stdset="0">
+                  <string/>
+                 </property>
+                 <property name="fieldNameNumber">
+                  <string>asset_address</string>
+                 </property>
+                 <property name="fieldNameLine1">
+                  <string>addr_line1</string>
+                 </property>
+                 <property name="fieldNameLine2">
+                  <string>addr_line2</string>
+                 </property>
+                 <property name="fieldNameLine3">
+                  <string>addr_line3</string>
+                 </property>
+                 <property name="fieldNameCity">
+                  <string>addr_city</string>
+                 </property>
+                 <property name="fieldNameState">
+                  <string>addr_state</string>
+                 </property>
+                 <property name="fieldNamePostalCode">
+                  <string>addr_postalcode</string>
+                 </property>
+                 <property name="fieldNameCountry">
+                  <string>addr_country</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="verticalSpacer_3">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
             </item>
            </layout>
           </item>
@@ -684,7 +758,7 @@ to be bound by its terms.</comment>
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="tab_2">
+        <widget class="QWidget" name="tab4">
          <attribute name="title">
           <string>Maintenance</string>
          </attribute>
@@ -869,6 +943,11 @@ to be bound by its terms.</comment>
    <header>addresscluster.h</header>
   </customwidget>
   <customwidget>
+   <class>CRMAcctCluster</class>
+   <extends>QWidget</extends>
+   <header>crmacctcluster.h</header>
+  </customwidget>
+  <customwidget>
    <class>CurrCluster</class>
    <extends>CurrDisplay</extends>
    <header>currcluster.h</header>
@@ -945,7 +1024,6 @@ to be bound by its terms.</comment>
   <tabstop>_assetlife</tabstop>
   <tabstop>_warranty</tabstop>
   <tabstop>_warranty_exp</tabstop>
-  <tabstop>_address</tabstop>
   <tabstop>_notes</tabstop>
   <tabstop>_save</tabstop>
  </tabstops>

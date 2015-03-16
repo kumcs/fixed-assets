@@ -1,0 +1,47 @@
+-- Group: asset
+-- Name:  fetchFixedAssetsLocation
+-- Notes: fetch List of Fixed Assets by Location
+select id,altId, seq,
+       CASE WHEN seq = 0 THEN asset_code ELSE '' END AS asset_code,
+       asset_name,
+       asset_code,
+       asset_type,
+       asset_addr1, 
+       asset_city, 
+       asset_crmacct, 
+       asset_location,
+       seq as xtindentrole
+ FROM
+(SELECT 0 as seq, a.id as id, a.id as altid, a.asset_code, a.asset_name, 
+	t.assettype_name as asset_type
+        , addr_line1 AS asset_addr1
+        , addr_city AS asset_city
+        , crmacct_number AS asset_crmacct
+        , formatLocationName(asset_location_id) AS asset_location
+FROM asset.asset a
+JOIN asset.asset_type t on a.asset_type = t.id
+  LEFT OUTER JOIN addr ON (asset_address = addr_id)
+  LEFT OUTER JOIN crmacct ON (crmacct_id = asset_crmacct_id)
+WHERE (true)
+<? if exists("search") ?>
+  AND (asset_code ~* <? value("search") ?>
+  OR asset_name ~* <? value("search") ?>)
+<? endif ?>
+<? if exists("show_retired") ?>
+  AND NOT a.asset_status = <? value("show_retired") ?>
+<? endif ?>
+<? if exists("type") ?>
+  AND asset_type=<? value("type") ?>
+<? endif ?>
+<? if exists("crmacct") ?>
+  AND asset_crmacct_id = <? value("crmacct") ?>
+<? endif ?>
+<? if exists("asset_location") ?>
+  AND asset_location_id = <? value("asset_location") ?>
+<? endif ?>
+<? if exists("address") ?>
+  AND (addr_line1 ~* <? value("address") ?> 
+         OR addr_city ~* <? value("address") ?>) 
+<? endif ?>
+) as foo
+order by id, seq

@@ -1,8 +1,11 @@
 /* xTuple Fixed Asset
-// Copyright (c) 2010-2012 Dave Anderson (www.anderson.net.nz)
+// Copyright (c) 2010-2015 Dave Anderson (www.pentuple.co.nz)
 // This package is provided free of charge to the xTuple community.
 // If you find any errors or bugs or make any improvements, please submit these back to the author for inclusion in a future release
 */
+
+include("asset");
+asset.fixedAsset = new Object;
 
 // Declare variables
 var _close = mywindow.findChild("_close");
@@ -23,7 +26,9 @@ var _comments = mywindow.findChild("_comments");
 var _notes = mywindow.findChild("_notes");
 var _rb1 = mywindow.findChild("_rb1");
 var _rb2 = mywindow.findChild("_rb2");
+var _crmacct = mywindow.findChild("_crmacct");
 var _address = mywindow.findChild("_address");
+var _location = mywindow.findChild("_location");
 var _tab = mywindow.findChild("_tab");
 var _warranty = mywindow.findChild("_warranty");
 var _purchdate = mywindow.findChild("_purchdate");
@@ -43,9 +48,10 @@ var _populating = false;
 _close.clicked.connect(close);
 _save.clicked.connect(saveAsset);
 _assetCode["lostFocus()"].connect(checkTag);
-
 _warranty["valueChanged(int)"].connect(warrantyChanged);
 _assetStatus["currentIndexChanged(QString)"].connect(checkStatus);
+_crmacct["newId(int)"].connect(updateCRMAddress);
+_location["newID(int)"].connect(updateLocationAddress);
 
 // TODO - Add Comments when the Comments Widget allows adhoc types
 //_rb1.clicked.connect(selectNotes);
@@ -57,6 +63,7 @@ _assetStatus.populate("SELECT assetstatus_id, assetstatus_code from asset.asset_
 _asset_brand.populate("SELECT trunc(random() * 10000 + 1) as id, asset_brand FROM (SELECT DISTINCT asset_brand FROM asset.asset) as qry ORDER BY asset_brand");
 _asset_disposition.populate("SELECT disp_id, disp_code FROM asset.asset_disp ORDER BY disp_code");
 _parent.populate("SELECT id, asset_code || ' - ' || asset_name FROM asset.asset ORDER BY asset_code");
+_location.populate("SELECT location_id, formatLocationName(location_id) AS locationname FROM location");
 
 _tab.setCurrentIndex(0);
 //selectNotes();
@@ -85,6 +92,7 @@ function populate()
   var qparam = new Object();
   qparam.code = _assetCode.text;
   var data = toolbox.executeDbQuery("asset", "fetchFixedAsset", qparam);
+  asset.errorCheck(data);
   if (data.first())
     {
      _asset_brand.text = data.value("asset_brand");
@@ -94,6 +102,8 @@ function populate()
      _residual_value.baseValue = data.value("asset_residual_value"); 
      _asset_disposition.setId(data.value("asset_disposition"));
      _parent.setId(data.value("asset_parentid"));	
+     _crmacct.setId(data.value("asset_crmacct_id"));
+     _location.setId(data.value("asset_location_id"));
     }
   if(_fixedAsset.mode == _viewMode)
   {
@@ -142,8 +152,8 @@ function saveAsset()
   mywindow.close();
 }
 
-function sSave()
-{
+function sSave() {
+  var tmp;
 // Check required details have been entered 
   if (_assetType.id() == -1 || _assetCode.text == "" || _assetName.text == "" || _assetStatus.id() == -1)
   {
@@ -163,36 +173,14 @@ function sSave()
   }
 
    // Save the Asset
-  if(_fixedAsset.mode == _newMode)
-  {
-   try
-   { 
-     tmp = toolbox.executeDbQuery("asset", "insertFixedAsset", getParams());
-   }
-   catch(e)
-   {
-    print(e);
-    var msg = "Asset creation failed.  Please contact your System Administrator.\n\n" + tmp.lastError().text; 
-    QMessageBox.critical( mywindow, "Database Error", msg);
-    return false;
-   }
+  if(_fixedAsset.mode == _newMode) {
+    tmp = toolbox.executeDbQuery("asset", "insertFixedAsset", getParams());
+  } else if(_fixedAsset.mode == _editMode) {
+    tmp = toolbox.executeDbQuery("asset", "updateFixedAsset", getParams());
   }
-  if(_fixedAsset.mode == _editMode)
-  {
-   try
-   {
-     tmp = toolbox.executeDbQuery("asset", "updateFixedAsset", getParams());
-   }
-   catch(e)
-   {
-    print(e);
-    var msg = "Asset update  failed.  Please contact your System Administrator.\n\n" + tmp.lastError().text;
-    QMessageBox.critical(mywindow, "Database Error", msg);
-    return false;
-   }
-  }
+  asset.errorCheck(tmp);
   _fixedAsset.setMode(_editMode);
-} 
+}
 
 function getParams()
 {
@@ -216,20 +204,17 @@ var params = new Object();
  params.purch_date = _purchdate.date;
  params.asset_life = _asset_life.text;
  params.notes = mywindow.findChild("_notes").plainText;
- if (_address.id() != -1)
- {
-   params.address = _address.id();
- }
+ params.crmacct = _crmacct.id() == -1 ? null : _crmacct.id();
+ params.location = _location.id() == -1 ? null : _location.id();
+ params.address = _address.id();
  params.warranty_exp = _warranty_exp.date;
  params.warranty = _warranty.value;
  params.retire_date = _asset_retire.date;
  params.disposition = _asset_disposition.id();
  if (_parent.id() == -1)
- {
-   params.parent = null;
- } else {
+   params.parent = null; 
+ else
    params.parent = _parent.id();
- }
 
  return params;
 }
@@ -270,6 +255,82 @@ function warrantyChanged()
    }
 }
 
+function updateCRMAddress() {
+  if (_populating)
+    return;
+
+  if (_crmacct.id() > 0) {
+    _location.setId(-1);
+    _location.setEnabled(_crmacct.id() < 0);
+
+    var p = new Object;
+    p.crmacct = _crmacct.id();
+    var _sql = "SELECT cntct_addr_id FROM crmacct "
+             + "JOIN cntct ON (crmacct_cntct_id_1 = cntct_id) "
+             + "WHERE (crmacct_id=<? value('crmacct') ?>);";
+    var addr = toolbox.executeQuery(_sql, p);
+    asset.errorCheck(addr);
+    if (addr.first())
+      _address.setId(addr.value("cntct_addr_id"));
+    updateSubAssetLocations();
+  }
+
+  if (_crmacct.id() == -1 && _location.id() == -1) {
+    _location.setEnabled(true);
+    _crmacct.setEnabled(true);
+    updateSubAssetLocations();
+  }
+}
+
+function updateLocationAddress() {
+  if (_populating)
+    return;
+
+  if (_location.id() > 0) {
+    _crmacct.setId(-1);
+    _crmacct.setEnabled(_location.id() < 0);
+    with (_address) {
+      setId(-1);
+      setLine1("");
+      setLine2("");
+      setLine3("");
+      setCity("");
+      setState("");
+      setPostalCode("");
+    }
+    updateSubAssetLocations();
+  }
+ 
+  if (_crmacct.id() == -1 && _location.id() == -1) {
+    _location.setEnabled(true);
+    _crmacct.setEnabled(true);
+    updateSubAssetLocations();
+  }
+}
+
+function updateSubAssetLocations() {
+  var p = new Object;
+  p.code = _assetCode.text;
+  var _sql = "SELECT EXISTS (SELECT * FROM asset.asset "
+           + " WHERE asset_parentid IN (SELECT id FROM asset.asset WHERE asset_code = <? value('code') ?>));";
+  var _chk = toolbox.executeQuery(_sql, p);
+  if (!_chk.first())
+    return; // this should not occur
+
+  if (_chk.value("exists") == false)
+     return; // Nothing to update
+
+  var _msg = qsTr("This Asset has sub-assets assigned.  Do you want to update the sub-asset locations?");
+  if (QMessageBox.question(mywindow,qsTr("Sub-Assets"), _msg, QMessageBox.Yes, QMessageBox.No) == QMessageBox.No)
+     return; // User does not want to update
+
+  // Passed checks OK to update sub-assets
+  _sql = "UPDATE asset.asset SET asset_address = <? value('address') ?>, asset_crmacct_id = <? value('crmacct') ?>, "
+         + " asset_location_id = <? value('location') ?> WHERE asset_parentid IN (SELECT id FROM asset.asset WHERE asset_code = <? value('code') ?>);";
+  var _upd = toolbox.executeQuery(_sql, getParams());
+  asset.errorCheck(_upd);
+}
+
 function retireAsset()
 {
   _assetStatus.setId(5);
@@ -292,6 +353,7 @@ function checkCtrlStatus()
  var sql = 'SELECT asset_retired as retired, asset_depreciated as depreciated FROM asset.asset a'
          + ' WHERE asset_code = <? value("asset") ?>';
  var data = toolbox.executeQuery(sql, sparams);
+ asset.errorCheck(data);
  if (data.first())
  {
   if (data.value("retired") || data.value("depreciated"))
@@ -318,6 +380,7 @@ function checkTag()
  var p = new Object();
  p.code = _assetCode.text;
  var d= toolbox.executeQuery('SELECT asset_code FROM asset.asset WHERE asset_code = <? value("code") ?>', p);
+  asset.errorCheck(d);
  if (d.first())
  {
   QMessageBox.warning(mywindow, "Duplicate Code", "You have entered an Asset code that already exists.  Please amend the code");
