@@ -6,16 +6,18 @@ select id,altId, seq,
        asset_name,
        asset_code,
        asset_type,
+       asset_serial,
        seq as xtindentrole
  FROM
 (SELECT 0 as seq, a.id as id, a.id as altid, a.asset_code, a.asset_name, 
-	t.assettype_name as asset_type
+	a.asset_serial, t.assettype_name as asset_type
 FROM asset.asset a
 JOIN asset.asset_type t on a.asset_type = t.id
 WHERE (true)
 <? if exists("search") ?>
-  AND (asset_code ~* <? value("search") ?>
-  OR asset_name ~* <? value("search") ?>)
+  AND ((asset_code ~* <? value("search") ?>)
+  OR (asset_name ~* <? value("search") ?>)
+  OR (asset_serial ~* <? value("search") ?>))
 <? endif ?>
 <? if exists("show_retired") ?>
   AND NOT a.asset_status = <? value("show_retired") ?>

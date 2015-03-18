@@ -30,6 +30,7 @@ with (_results)
   addColumn("Code",  -1, 1, true, "asset_code");
   addColumn("Description / Sub-Asset",  -1, 1, true, "asset_name");
   addColumn("Asset Type",  -1, 1, true, "asset_type");
+  addColumn("Serial #",  -1, 1, true, "asset_serial");
 }
 
 fillList();
