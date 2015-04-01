@@ -103,7 +103,7 @@ function populate()
      _asset_disposition.setId(data.value("asset_disposition"));
      _parent.setId(data.value("asset_parentid"));	
      _crmacct.setId(data.value("asset_crmacct_id"));
-     _location.setId(data.value("asset_location_id"));
+     _location.setId(data.value("asset_loc_id"));
     }
   if(_fixedAsset.mode == _viewMode)
   {
@@ -120,11 +120,15 @@ function set(input)
 {
  if ("mode" in input)
  {
-  _fixedAsset.setMode(input.mode);
-  if (input.mode == _newMode)
-  {
-    prepare();
-  }
+   _fixedAsset.setMode(input.mode);
+   if (input.mode == _newMode)
+   {
+     prepare();
+   }
+   if (input.mode == _viewMode)
+   {
+     _save.setVisible(false);
+   } 
  }
  if ("filter" in input)
  {
@@ -204,8 +208,8 @@ var params = new Object();
  params.purch_date = _purchdate.date;
  params.asset_life = _asset_life.text;
  params.notes = mywindow.findChild("_notes").plainText;
- params.crmacct = _crmacct.id() == -1 ? null : _crmacct.id();
- params.location = _location.id() == -1 ? null : _location.id();
+ params.crmacct = _crmacct.id();
+ params.location = _location.id();
  params.address = _address.id();
  params.warranty_exp = _warranty_exp.date;
  params.warranty = _warranty.value;
@@ -326,7 +330,7 @@ function updateSubAssetLocations() {
 
   // Passed checks OK to update sub-assets
   _sql = "UPDATE asset.asset SET asset_address = <? value('address') ?>, asset_crmacct_id = <? value('crmacct') ?>, "
-         + " asset_location_id = <? value('location') ?> WHERE asset_parentid IN (SELECT id FROM asset.asset WHERE asset_code = <? value('code') ?>);";
+         + " asset_loc_id = <? value('location') ?> WHERE asset_parentid IN (SELECT id FROM asset.asset WHERE asset_code = <? value('code') ?>);";
   var _upd = toolbox.executeQuery(_sql, getParams());
   asset.errorCheck(_upd);
 }
