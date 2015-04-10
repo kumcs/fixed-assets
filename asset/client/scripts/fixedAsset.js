@@ -107,11 +107,14 @@ function populate()
     }
   if(_fixedAsset.mode == _viewMode)
   {
-  _asset_brand.enabled = false;
-  _notes.enabled = false;
-  _vendor.enabled = false;
-  _purch_price.enabled = false;
-  _residual_value.enabled = false;
+    _asset_brand.enabled = false;
+    _notes.enabled = false;
+    _vendor.enabled = false;
+    _purch_price.enabled = false;
+    _residual_value.enabled = false;
+    _crmacct.enabled = false;
+    _location.enabled = false;
+    _address.enabled = false;
   }
  _populating = false;
 }
@@ -120,11 +123,15 @@ function set(input)
 {
  if ("mode" in input)
  {
-  _fixedAsset.setMode(input.mode);
-  if (input.mode == _newMode)
-  {
-    prepare();
-  }
+   _fixedAsset.setMode(input.mode);
+   if (input.mode == _newMode)
+   {
+     prepare();
+   }
+   if (input.mode == _viewMode)
+   {
+     _save.setVisible(false);
+   } 
  }
  if ("filter" in input)
  {
