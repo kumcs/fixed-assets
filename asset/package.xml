@@ -2,11 +2,11 @@
          name="asset"
          developer="Pentuple New Zealand"
          descrip="Fixed Assets"
-         version="1.4.0"
+         version="1.5.0"
          updater="2.2.4">
   <pkgnotes>Fixed Asset Register add-on package for xTuple ERP.
 
-        This file is part of the Fixed Asset package for xTuple ERP: PostBooks Edition,
+        This file is part of the Fixed Asset package for xTuple ERP,
         a free and open source Enterprise Resource Planning software suite,
         Copyright (c) 2010-2015 by Pentuple Consulting Ltd. (New Zealand) www.pentuple.co.nz.
         It is licensed to you under the Common Public Attribution License
@@ -31,7 +31,7 @@
   <prerequisite type="license" name="xTuple Concise EULA">
     <message>
       &lt;p>
-          This file is part of the Fixed Asset package for xTuple ERP: PostBooks Edition,
+          This file is part of the Fixed Asset package for xTuple ERP,
           a free and open source Enterprise Resource Planning software suite,
 	        Copyright (c) 2010-2015 by Pentuple Consulting Ltd. (New Zealand) www.pentuple.co.nz.
           It is licensed to you under the Common Public Attribution License

@@ -18,6 +18,14 @@ asset.errorCheck = function (q)
   return true;
 }
 
+asset.getAssetId = function (assetcode) 
+{
+  var sql = "SELECT id AS ret FROM asset.asset WHERE asset_code=<? value('asset') ?>;";
+  var ret = toolbox.executeQuery(sql, {asset: assetcode});
+  if (ret.first())
+    return ret.value("ret");
+}
+
 // Check presence of Depreciation package
 asset.checkDepn = function ()
 {
@@ -44,4 +52,12 @@ asset.checkMaint = function ()
    else { return false}
   } 
    else { return false}  
+}
+
+asset.isRetired = function (asset) 
+{
+  var sql = "SELECT (asset_status = 5) AS ret FROM asset.asset WHERE id=<? value('assetid') ?>;";
+  var ret = toolbox.executeQuery(sql, {assetid: asset});
+  if (ret.first())
+    return ret.value("ret");
 }

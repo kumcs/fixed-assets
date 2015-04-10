@@ -1,3 +1,5 @@
+include("asset");
+
 var _close = mywindow.findChild("_close");
 var _new = mywindow.findChild("_new");
 var _edit = mywindow.findChild("_edit");
@@ -30,6 +32,7 @@ with (_results)
   addColumn("Code",  -1, 1, true, "asset_code");
   addColumn("Description / Sub-Asset",  -1, 1, true, "asset_name");
   addColumn("Asset Type",  -1, 1, true, "asset_type");
+  addColumn("Asset Status",  -1, 1, true, "assetstatus_code");
 }
 
 fillList();
@@ -43,30 +46,41 @@ if(pMenu == null)
   pMenu = _results.findChild("_menu");
 
 if(pMenu != null)
- {
+{
   var _addsep = false;
   var currentItem = _results.currentItem();
   if(currentItem != null)
   {
-   mCode = pMenu.addAction(qsTr("Edit..."));
-   mCode.enabled = privileges.check("MaintainFixedAsset");
-   mCode.triggered.connect(assetEdit);
+   if (pItem.rawValue("assetstatus_code") !== "Retired")
+   {
+     mCode = pMenu.addAction(qsTr("Edit..."));
+     mCode.enabled = privileges.check("MaintainFixedAsset");
+     mCode.triggered.connect(assetEdit);
+   }
 
    mCode = pMenu.addAction(qsTr("View..."));
    mCode.enabled = privileges.check("ViewFixedAsset") || privileges.check("MaintainFixedAsset");
    mCode.triggered.connect(assetView);
 
-   mCode = pMenu.addAction(qsTr("Retire..."));
-   mCode.enabled = privileges.check("MaintainFixedAsset");
-   mCode.triggered.connect(retireAsset);
+   if (pItem.rawValue("assetstatus_code") !== "Retired")
+   {
+     mCode = pMenu.addAction(qsTr("Retire..."));
+     mCode.enabled = privileges.check("MaintainFixedAsset");
+     mCode.triggered.connect(retireAsset);
+   }
+   if (pItem.rawValue("assetstatus_code") == "Retired")
+   {
+     mCode = pMenu.addAction(qsTr("Delete..."));
+     mCode.enabled = privileges.check("MaintainFixedAsset");
+     mCode.triggered.connect(deleteAsset);
+   }
 
-   mCode = pMenu.addAction(qsTr("Print Asset Report"));
+   mCode = pMenu.addAction(qsTr("Asset Report"));
    mCode.enabled = privileges.check("ViewFixedAsset") || privileges.check("MaintainFixedAsset");
    mCode.triggered.connect(printAsset);
   }
  }
 }
- 
 
 function fillList()
 {
@@ -107,7 +121,10 @@ function assetEdit()
   QMessageBox.warning(mywindow, "Selection", "You must select a line first");
   return 0;
  }
- assetOpen(1,_results.altId(), false);
+ if (_results.rawValue("assetstatus_code") == "Retired") 
+   assetOpen(2,_results.altId(), false);
+ else
+   assetOpen(1,_results.altId(), false);
 }
 
 function assetView()
@@ -148,6 +165,32 @@ function retireAsset()
  }
  assetOpen(1,_results.altId(), true);
 
+}
+
+function deleteAsset()
+{
+  var _answer = QMessageBox.question(mywindow, qsTr("Delete Asset"), qsTr("This action will permanently delete the asset.\n Do you wish to continue?"), QMessageBox.Yes, QMessageBox.No);
+  if (_answer == QMessageBox.No)
+    return;
+
+  var params = {asset: _results.id()};
+
+  if (asset.checkDepn()) // Depreciation package installed
+  {
+  // Check for Depreciation transactions
+    var _sql = "SELECT EXISTS(SELECT * FROM assetdepn.asset_trans WHERE "            
+             + "assettrans_asset_id=<? value('asset') ?>) AS res;";
+    var _chk = toolbox.executeQuery(_sql, params);
+    if (_chk.first() && _chk.value("res") == true)
+    {
+      QMessageBox.critical(mywindow,qsTr("Transactions Exist"), qsTr("Transactions exist for this asset.  It cannot be deleted."));
+      return;
+    }
+  }
+
+  var _del = toolbox.executeQuery("DELETE FROM asset.asset WHERE id=<? value('asset') ?>", params);
+  asset.errorCheck(_del);
+  fillList();
 }
 
 function checkEditprivs()
