@@ -1,7 +1,7 @@
 -- Group: asset
 -- Name:  fetchFixedAssets
 -- Notes: fetch List of Fixed Assets
-SELECT id,altId, seq,
+select id,altId, seq,
        CASE WHEN seq = 0 THEN asset_code ELSE '' END AS asset_code,
        asset_name,
        asset_code,
