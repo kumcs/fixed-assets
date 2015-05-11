@@ -14,8 +14,8 @@ JOIN asset.asset_type t
 ON vw.asset_type=t.id
 WHERE (1=1)
 <? if exists("search") ?>
-AND (asset_code LIKE <? value("search") ?>
-OR asset_name LIKE <? value("search") ?>)
+  AND (asset_code ~* <? value("search") ?>
+  OR asset_name ~* <? value("search") ?>)
 <? endif ?>
 <? if exists("code") ?>
 AND asset_code = <? value("code") ?>
