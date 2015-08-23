@@ -1,4 +1,4 @@
 -- Group: asset
 -- Name:  fetchFixedAsset
--- Notes: fetch Fixed Asset Details  - Dave Anderson 2012
-SELECT * FROM asset.asset WHERE asset_code = <? value("code") ?> LIMIT 1
+-- Notes: fetch Fixed Asset Details
+SELECT * FROM asset.asset WHERE asset.id = <? value("assetid") ?>;

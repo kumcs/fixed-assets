@@ -37,7 +37,13 @@ var _warranty_exp = mywindow.findChild("_warranty_exp");
 var _purch_price = mywindow.findChild("_purchprice");
 var _residual_value = mywindow.findChild("_residualvalue");
 var _asset_life = mywindow.findChild("_assetlife");
+var _asset_model = mywindow.findChild("_asset_model");
+var _asset_barcode = mywindow.findChild("_asset_barcode");
+var _asset_serial = mywindow.findChild("_asset_serial");
+var _purchase_place = mywindow.findChild("_purchase_place");
+var _last_service = mywindow.findChild("_last_service");
 
+var _assetid;
 var _newMode = 0;
 var _editMode = 1;
 var _viewMode = 2;
@@ -86,25 +92,39 @@ function prepare()
 function populate()
 {
   _populating = true;
-  _fixedAsset.select();
-  _assetCode.enabled = false;
- 
+
   var qparam = new Object();
-  qparam.code = _assetCode.text;
+  qparam.assetid = _assetid;
   var data = toolbox.executeDbQuery("asset", "fetchFixedAsset", qparam);
   asset.errorCheck(data);
   if (data.first())
-    {
-     _asset_brand.text = data.value("asset_brand");
-     _vendor.setId(data.value("asset_vendor"));
-     _notes.plainText = data.value("asset_comments");
-     _purch_price.baseValue = data.value("asset_purch_price");
-     _residual_value.baseValue = data.value("asset_residual_value"); 
-     _asset_disposition.setId(data.value("asset_disposition"));
-     _parent.setId(data.value("asset_parentid"));	
-     _crmacct.setId(data.value("asset_crmacct_id"));
-     _location.setId(data.value("asset_loc_id"));
-    }
+  {
+    _assetCode.text = data.value("asset_code");
+    _assetName.text = data.value("asset_name");
+    _assetType.setId(data.value("asset_type"));
+    _assetStatus.setId(data.value("asset_status"));
+    _asset_brand.text = data.value("asset_brand");
+    _asset_retire.setDate(data.value("asset_retire_date"));
+    _asset_disposition.setId(data.value("asset_disposition"));
+    _purchdate.setDate(data.value("asset_purch_date"));
+    _warranty.setValue(data.value("asset_warranty_mth"));
+    _last_service.setDate(data.value("asset_last_service"));
+    _installdate.setDate(data.value("asset_install_date"));
+    _asset_model.text = data.value("asset_model");
+    _asset_serial.text = data.value("asset_serial");
+    _asset_barcode.text = data.value("asset_barcode");
+    _purchase_place.text = data.value("purchase_place");
+    _vendor.setId(data.value("asset_vendor"));
+    _notes.plainText = data.value("asset_comments");
+    _purch_price.baseValue = data.value("asset_purch_price");
+    _purchase_place.text = data.value("asset_purch_place");
+    _residual_value.baseValue = data.value("asset_residual_value"); 
+    _asset_disposition.setId(data.value("asset_disposition"));
+    _parent.setId(data.value("asset_parentid"));	
+    _crmacct.setId(data.value("asset_crmacct_id"));
+    _location.setId(data.value("asset_location_id"));
+    _address.setId(data.value("asset_address"));
+  }
   if(_fixedAsset.mode == _viewMode)
   {
     _asset_brand.enabled = false;
@@ -116,7 +136,9 @@ function populate()
     _location.enabled = false;
     _address.enabled = false;
   }
+
  _populating = false;
+
 }
 
 function set(input)
@@ -133,17 +155,15 @@ function set(input)
      _save.setVisible(false);
    } 
  }
- if ("filter" in input)
+ if ("assetid" in input)
  {
-   _fixedAsset.setFilter(input.filter);
+   _assetid = input.assetid;
    populate();
  } 
  if ("retire" in input)
  {
    if (input.retire == true)
-   {
-   retireAsset();
-   }
+     retireAsset();
  }
  checkCtrlStatus();
  return 0;
@@ -192,6 +212,7 @@ function sSave() {
 function getParams()
 {
 var params = new Object();
+ params.assetid = _assetid;
  params.code = _assetCode.text;
  params.name = _assetName.text;
  params.type = _assetType.id();
@@ -211,17 +232,14 @@ var params = new Object();
  params.purch_date = _purchdate.date;
  params.asset_life = _asset_life.text;
  params.notes = mywindow.findChild("_notes").plainText;
- params.crmacct = _crmacct.id();
- params.location = _location.id();
+ params.crmacct = _crmacct.id() == -1 ? null : _crmacct.id();
+ params.location = _location.id() == -1 ? null : _location.id();
  params.address = _address.id();
  params.warranty_exp = _warranty_exp.date;
  params.warranty = _warranty.value;
  params.retire_date = _asset_retire.date;
  params.disposition = _asset_disposition.id();
- if (_parent.id() == -1)
-   params.parent = null; 
- else
-   params.parent = _parent.id();
+ params.parent = _parent.id() == -1 ? null : _parent.id();
 
  return params;
 }
@@ -333,7 +351,7 @@ function updateSubAssetLocations() {
 
   // Passed checks OK to update sub-assets
   _sql = "UPDATE asset.asset SET asset_address = <? value('address') ?>, asset_crmacct_id = <? value('crmacct') ?>, "
-         + " asset_loc_id = <? value('location') ?> WHERE asset_parentid IN (SELECT id FROM asset.asset WHERE asset_code = <? value('code') ?>);";
+         + " asset_location_id = <? value('location') ?> WHERE asset_parentid IN (SELECT id FROM asset.asset WHERE asset_code = <? value('code') ?>);";
   var _upd = toolbox.executeQuery(_sql, getParams());
   asset.errorCheck(_upd);
 }
@@ -381,12 +399,13 @@ function checkCtrlStatus()
 
 function checkTag()
 {
- if (_fixedAsset.mode == _editMode || _fixedAsset.mode == _viewMode)
+ if (_fixedAsset.mode == _viewMode)
    return true;
 
  var p = new Object();
+ p.assetid = _assetid; 
  p.code = _assetCode.text;
- var d= toolbox.executeQuery('SELECT asset_code FROM asset.asset WHERE asset_code = <? value("code") ?>', p);
+ var d= toolbox.executeQuery('SELECT asset_code FROM asset.asset WHERE (asset_code = <? value("code") ?>) AND (asset.id <> <? value("assetid") ?>)', p);
   asset.errorCheck(d);
  if (d.first())
  {

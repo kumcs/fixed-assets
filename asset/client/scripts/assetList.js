@@ -84,8 +84,6 @@ if(pMenu != null)
 
 function fillList()
 {
- try
- {
   if (_search.text == "" && _type.id() == -1)
   {
 //  Display in hierarchy format
@@ -94,13 +92,8 @@ function fillList()
 //  Display in list format
     data = toolbox.executeDbQuery("asset", "fetchFixedAssets", getParams());
   }
-  _results.populate(data,true);
- }
- catch(e)
- {
-   print(e);
-   QMessageBox.critical(mywindow, "Database Error", "Critical error:" + e);
- }
+  if (asset.errorCheck(data));
+    _results.populate(data,true);
 }
 
 function closeForm()
@@ -146,7 +139,7 @@ function assetOpen(mode, number, retire)
    wparams.mode = mode;
    wparams.retire = retire;
    if (mode)
-     wparams.filter = "id = " + number;
+     wparams.assetid = number;
    var tmp = toolbox.lastWindow().set(wparams);
   }
   catch(e)
