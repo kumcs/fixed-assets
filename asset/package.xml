@@ -2,7 +2,7 @@
          name="asset"
          developer="Pentuple New Zealand"
          descrip="Fixed Assets"
-         version="1.5.1"
+         version="1.5.2"
          updater="2.2.4">
   <pkgnotes>Fixed Asset Register add-on package for xTuple ERP.
 
@@ -18,13 +18,11 @@
   <prerequisite type="Query"
                 name="Check xTuple ERP version">
     <query>
-      SELECT (SUBSTRING(fetchMetricText('ServerVersion') FOR 1) > '4') 
-          OR (SUBSTRING(fetchMetricText('ServerVersion') FOR 1) = '4'
-          AND SUBSTRING(fetchMetricText('ServerVersion') FROM 3 FOR 1) >= '4');
+       SELECT compareVersion(fetchMetricText('ServerVersion'), '4.8.0') >= 0;
     </query>
     <message>
       This version of the Fixed Asset package only works with xTuple ERP
-      versions 4.4.0 and greater.
+      versions 4.8.0 and greater.
     </message>
   </prerequisite>
 
