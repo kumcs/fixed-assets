@@ -1,5 +1,5 @@
 /* xTuple Fixed Asset
-// Copyright (c) 2010-2015 Dave Anderson (www.pentuple.co.nz)
+// Copyright (c) 2010-2015 Pentuple Ltd. New Zealand (www.pentuple.co.nz)
 // This package is provided free of charge to the xTuple community.
 // If you find any errors or bugs or make any improvements, please submit these back to the author for inclusion in a future release
 */
@@ -22,7 +22,8 @@ var _vendor = mywindow.findChild("_vendorcode");
 var _asset_brand = mywindow.findChild("_asset_brand");
 var _asset_retire = mywindow.findChild("_asset_retire");
 var _asset_disposition = mywindow.findChild("_asset_disposition");
-var _comments = mywindow.findChild("_comments");
+var _characteristics = mywindow.findChild("_characteristics");
+var _documents = mywindow.findChild("_documents");
 var _notes = mywindow.findChild("_notes");
 var _rb1 = mywindow.findChild("_rb1");
 var _rb2 = mywindow.findChild("_rb2");
@@ -43,17 +44,18 @@ var _asset_serial = mywindow.findChild("_asset_serial");
 var _purchase_place = mywindow.findChild("_purchase_place");
 var _last_service = mywindow.findChild("_last_service");
 
-var _assetid;
+var _assetid = -1;
 var _newMode = 0;
 var _editMode = 1;
 var _viewMode = 2;
 
 var _populating = false;
+var _saved = false;
 
 // Connections
-_close.clicked.connect(close);
+_close.clicked.connect(mywindow.close);
 _save.clicked.connect(saveAsset);
-_assetCode["lostFocus()"].connect(checkTag);
+_assetCode["editingFinished()"].connect(checkTag);
 _warranty["valueChanged(int)"].connect(warrantyChanged);
 _assetStatus["currentIndexChanged(QString)"].connect(checkStatus);
 _crmacct["newId(int)"].connect(updateCRMAddress);
@@ -75,11 +77,6 @@ _tab.setCurrentIndex(0);
 //selectNotes();
 
 // Local functions
-function close()
-{
- mywindow.close();
-}
-
 function prepare()
 {
   _assetCode.clear();
@@ -87,6 +84,13 @@ function prepare()
   _asset_retire.enabled = false;
   _asset_disposition.enabled = false;
   _populating = false;
+  var getId = toolbox.executeQuery("SELECT nextval('asset.asset_id_seq') as seq");
+  asset.errorCheck(getId);
+  if (getId.first())
+    _assetid = getId.value("seq");
+  sSave(false);
+  _saved = false;
+  setDocument();
 }
 
 function populate()
@@ -137,7 +141,9 @@ function populate()
     _address.enabled = false;
   }
 
- _populating = false;
+  _saved = true;
+  setDocument();
+  _populating = false;
 
 }
 
@@ -171,7 +177,9 @@ function set(input)
 
 function saveAsset()
 {
-  sSave();
+  if (!sSave(true))
+    return;
+
   if(_print.checked == true) 
      printAsset();
   
@@ -179,34 +187,39 @@ function saveAsset()
   mywindow.close();
 }
 
-function sSave() {
+function sSave(checks) {
   var tmp;
 // Check required details have been entered 
-  if (_assetType.id() == -1 || _assetCode.text == "" || _assetName.text == "" || _assetStatus.id() == -1)
+  if (checks)
   {
-    QMessageBox.warning(mywindow, "Missing Information", "You must enter all details before saving (Code/Name/Type/Status)");
-    return 0;
-  }
+    if (_assetType.id() == -1 || _assetCode.text == "" || _assetName.text == "" || _assetStatus.id() == -1)
+    {
+      QMessageBox.warning(mywindow, "Missing Information", "You must enter all details before saving (Code/Name/Type/Status)");
+      return false;
+    }
 
-  if (!checkStatus() || !checkTag())
-  {
-    return 0;
-  }
+    if (!checkStatus() || !checkTag())
+    {
+      return false;
+    }
 
-  if (_installdate.date < _purchdate.date)
-  {
-    QMessageBox.warning(mywindow, "Incorrect Information", "You cannot install an Asset before you purchase it.");
-    return 0;
+    if (_installdate.date < _purchdate.date)
+    {
+      QMessageBox.warning(mywindow, "Incorrect Information", "You cannot install an Asset before you purchase it.");
+      return false;
+    }
   }
-
-   // Save the Asset
+  // Save the Asset
   if(_fixedAsset.mode == _newMode) {
     tmp = toolbox.executeDbQuery("asset", "insertFixedAsset", getParams());
+    asset.errorCheck(tmp);
   } else if(_fixedAsset.mode == _editMode) {
     tmp = toolbox.executeDbQuery("asset", "updateFixedAsset", getParams());
+    if(asset.errorCheck(tmp))
+      _saved = true;
   }
-  asset.errorCheck(tmp);
   _fixedAsset.setMode(_editMode);
+  return true;
 }
 
 function getParams()
@@ -417,14 +430,19 @@ function checkTag()
   return true;
 }
 
-//function selectComments()
-//{
-// _notes.setVisible(false);
-// _comments.setVisible(true);
-//}
+function setDocument()
+{  
+  _documents.setType("FADOC");
+  _documents.setId(_assetid);
+  _characteristics.setType("FADOC");
+  _characteristics.setId(_assetid);
+}
 
-//function selectNotes()
-//{
-// _notes.setVisible(true);
-// _comments.setVisible(false);
-//}
+function closeEvent()
+{
+  if (!_saved)
+  {
+    var del = toolbox.executeQuery("DELETE FROM asset.asset WHERE (id = <? value('assetid') ?>);", {assetid: _assetid});
+    asset.errorCheck(del);
+  }
+}

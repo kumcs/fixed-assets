@@ -26,6 +26,4 @@ WHERE (true)
   AND asset_type=<? value("type") ?>
 <? endif ?>
 ) as foo
-
-ORDER BY id, seq
-
+order by id, seq

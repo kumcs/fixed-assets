@@ -2,7 +2,7 @@
          name="asset"
          developer="Pentuple New Zealand"
          descrip="Fixed Assets"
-         version="1.5.2"
+         version="1.6.0Beta"
          updater="2.2.4">
   <pkgnotes>Fixed Asset Register add-on package for xTuple ERP.
 
@@ -18,11 +18,11 @@
   <prerequisite type="Query"
                 name="Check xTuple ERP version">
     <query>
-       SELECT compareVersion(fetchMetricText('ServerVersion'), '4.8.0') >= 0;
+       SELECT compareVersion(fetchMetricText('ServerVersion'), '4.9.0') >= 0;
     </query>
     <message>
       This version of the Fixed Asset package only works with xTuple ERP
-      versions 4.8.0 and greater.
+      versions 4.9.0 and greater.
     </message>
   </prerequisite>
 
@@ -117,5 +117,6 @@
   <finalscript file="database/misc/asset_disp.sql" />
   <finalscript file="database/misc/tidyup_menu.sql" />
   <finalscript file="database/functions/hierarchy_functions.sql" name="fn_hierarchy_connect_by"/>
+  <finalscript file="database/misc/create_asset_source.sql" />
 
 </package>
