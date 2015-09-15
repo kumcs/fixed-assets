@@ -1,29 +1,49 @@
 -- Group: asset
 -- Name:  fetchFixedAssets
 -- Notes: fetch List of Fixed Assets
-select id,altId, seq,
-       CASE WHEN seq = 0 THEN asset_code ELSE '' END AS asset_code,
-       asset_name,
-       asset_code,
-       asset_type,
-       assetstatus_code,
-       seq as xtindentrole
- FROM
-(SELECT 0 as seq, a.id as id, a.id as altid, a.asset_code, a.asset_name, 
+SELECT DISTINCT ON (asset_code)
+        0 as seq, a.id as id, a.id as altid, a.asset_code, a.asset_name, 
 	t.assettype_name as asset_type, assetstatus_code
+<? foreach("char_id_text_list") ?>
+  , charass_alias<? literal("char_id_text_list") ?>.charass_value AS char<? literal("char_id_text_list") ?>
+<? endforeach ?>
+<? foreach("char_id_list_list") ?>
+  , charass_alias<? literal("char_id_list_list") ?>.charass_value AS char<? literal("char_id_list_list") ?>
+<? endforeach ?>
+<? foreach("char_id_date_list") ?>
+  , charass_alias<? literal("char_id_date_list") ?>.charass_value::date AS char<? literal("char_id_date_list") ?>
+<? endforeach ?>
 FROM asset.asset a
 JOIN asset.asset_type t on a.asset_type = t.id
 JOIN asset.asset_status ON (a.asset_status = assetstatus_id)
+<? foreach("char_id_text_list") ?>
+  LEFT OUTER JOIN charass charass_alias<? literal("char_id_text_list") ?> ON ((charass_alias<? literal("char_id_text_list") ?>.charass_target_type='FADOC') 
+                                                                    AND  (charass_alias<? literal("char_id_text_list") ?>.charass_target_id=a.id)
+                                                                    AND  (charass_alias<? literal("char_id_text_list") ?>.charass_char_id=<? value("char_id_text_list") ?>))
+  LEFT OUTER JOIN char char_alias<? literal("char_id_text_list") ?> ON (charass_alias<? literal("char_id_text_list") ?>.charass_char_id=char_alias<? literal("char_id_text_list") ?>.char_id)
+<? endforeach ?>
+<? foreach("char_id_list_list") ?>
+  LEFT OUTER JOIN charass charass_alias<? literal("char_id_list_list") ?> ON ((charass_alias<? literal("char_id_list_list") ?>.charass_target_type='FADOC') 
+                                                                    AND  (charass_alias<? literal("char_id_list_list") ?>.charass_target_id=a.id)
+                                                                    AND  (charass_alias<? literal("char_id_list_list") ?>.charass_char_id=<? value("char_id_list_list") ?>))
+  LEFT OUTER JOIN char char_alias<? literal("char_id_list_list") ?> ON (charass_alias<? literal("char_id_list_list") ?>.charass_char_id=char_alias<? literal("char_id_list_list") ?>.char_id)
+<? endforeach ?>
+<? foreach("char_id_date_list") ?>
+  LEFT OUTER JOIN charass charass_alias<? literal("char_id_date_list") ?> ON ((charass_alias<? literal("char_id_date_list") ?>.charass_target_type='FADOC') 
+                                                                    AND  (charass_alias<? literal("char_id_date_list") ?>.charass_target_id=a.id)
+                                                                    AND  (charass_alias<? literal("char_id_date_list") ?>.charass_char_id=<? value("char_id_date_list") ?>))
+  LEFT OUTER JOIN char char_alias<? literal("char_id_date_list") ?> ON (charass_alias<? literal("char_id_date_list") ?>.charass_char_id=char_alias<? literal("char_id_date_list") ?>.char_id)
+<? endforeach ?>
 WHERE (true)
-<? if exists("search") ?>
-  AND (asset_code ~* <? value("search") ?>
-  OR asset_name ~* <? value("search") ?>)
+<? if exists("search_pattern") ?>
+  AND (asset_code ~* <? value("search_pattern") ?>
+  OR asset_name ~* <? value("search_pattern") ?>)
 <? endif ?>
-<? if exists("show_retired") ?>
-  AND NOT a.asset_status = <? value("show_retired") ?>
+<? if not exists("retired") ?>
+  AND NOT a.asset_status = 5
 <? endif ?>
 <? if exists("type") ?>
   AND asset_type=<? value("type") ?>
 <? endif ?>
-) as foo
-order by id, seq
+<? literal("charClause") ?>
+order by asset_code, seq

@@ -11,20 +11,20 @@ var _type = mywindow.findChild("_type");
 var _print = mywindow.findChild("_print");
 var _showRetired = mywindow.findChild("_showRetired");
 
-_close.clicked.connect(closeForm);
+_close.clicked.connect(mywindow.close);
 _new.clicked.connect(assetNew);
 _view.clicked.connect(assetView);
 _edit.clicked.connect(assetEdit);
 _query.clicked.connect(fillList);
 _print.clicked.connect(printReport);
 _results.clicked.connect(checkEditprivs);
+_showRetired.clicked.connect(fillList);
 
 // Check priviledges
 _new.enabled = privileges.check("MaintainFixedAsset");
 
 _type.populate("SELECT id, assettype_code FROM asset.asset_type ORDER BY 2");
 
-_showRetired.clicked.connect(fillList);
 mainwindow["salesOrdersUpdated(int, bool)"].connect(fillList);
 
 with (_results)
@@ -94,11 +94,6 @@ function fillList()
   }
   if (asset.errorCheck(data));
     _results.populate(data,true);
-}
-
-function closeForm()
-{
- mywindow.close();
 }
 
 function assetNew()

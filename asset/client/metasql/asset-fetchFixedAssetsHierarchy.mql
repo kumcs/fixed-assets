@@ -1,10 +1,20 @@
 -- Group: asset
 -- Name:  fetchFixedAssetsHierarchy
 -- Notes: Display List of Assets in a hierarchy
-SELECT h.id, h.altid, h.value as asset_code, asset_name, assettype_name as asset_type, 
+SELECT 
+    h.id, h.altid, h.value as asset_code, asset.asset_name, assettype_name as asset_type, 
     assetstatus_code, (level - 1) as xtindentrole
+<? foreach("char_id_text_list") ?>
+  , string_agg(charass_alias<? literal("char_id_text_list") ?>.charass_value, ', '::text) AS char<? literal("char_id_text_list") ?>
+<? endforeach ?>
+<? foreach("char_id_list_list") ?>
+  , string_agg(charass_alias<? literal("char_id_list_list") ?>.charass_value, ', '::text) AS char<? literal("char_id_list_list") ?>
+<? endforeach ?>
+<? foreach("char_id_date_list") ?>
+  , string_agg(charass_alias<? literal("char_id_date_list") ?>.charass_value::date::text, ', '::text) AS char<? literal("char_id_date_list") ?>
+<? endforeach ?>
 FROM (
-SELECT  CASE WHEN (((q.h).node).parent = 0) THEN ((q.h).node).id ELSE ((q.h).node).parent END as id,
+SELECT  row_number() OVER() AS orderby, CASE WHEN (((q.h).node).parent = 0) THEN ((q.h).node).id ELSE ((q.h).node).parent END as id,
   ((q.h).node).id as altid,
   ((q.h).node).value,
   (q.h).level
@@ -14,12 +24,28 @@ SELECT  CASE WHEN (((q.h).node).parent = 0) THEN ((q.h).node).id ELSE ((q.h).nod
 JOIN asset.asset ON h.altid = asset.id
 JOIN asset.asset_type ON asset.asset_type=asset_type.id
 JOIN asset.asset_status ON (asset.asset_status=assetstatus_id)
+<? foreach("char_id_text_list") ?>
+  LEFT OUTER JOIN charass charass_alias<? literal("char_id_text_list") ?> ON ((charass_alias<? literal("char_id_text_list") ?>.charass_target_type='FADOC') 
+                                                                    AND  (charass_alias<? literal("char_id_text_list") ?>.charass_target_id=asset.id)
+                                                                    AND  (charass_alias<? literal("char_id_text_list") ?>.charass_char_id=<? value("char_id_text_list") ?>))
+  LEFT OUTER JOIN char char_alias<? literal("char_id_text_list") ?> ON (charass_alias<? literal("char_id_text_list") ?>.charass_char_id=char_alias<? literal("char_id_text_list") ?>.char_id)
+<? endforeach ?>
+<? foreach("char_id_list_list") ?>
+  LEFT OUTER JOIN charass charass_alias<? literal("char_id_list_list") ?> ON ((charass_alias<? literal("char_id_list_list") ?>.charass_target_type='FADOC') 
+                                                                    AND  (charass_alias<? literal("char_id_list_list") ?>.charass_target_id=asset.id)
+                                                                    AND  (charass_alias<? literal("char_id_list_list") ?>.charass_char_id=<? value("char_id_list_list") ?>))
+  LEFT OUTER JOIN char char_alias<? literal("char_id_list_list") ?> ON (charass_alias<? literal("char_id_list_list") ?>.charass_char_id=char_alias<? literal("char_id_list_list") ?>.char_id)
+<? endforeach ?>
+<? foreach("char_id_date_list") ?>
+  LEFT OUTER JOIN charass charass_alias<? literal("char_id_date_list") ?> ON ((charass_alias<? literal("char_id_date_list") ?>.charass_target_type='FADOC') 
+                                                                    AND  (charass_alias<? literal("char_id_date_list") ?>.charass_target_id=asset.id)
+                                                                    AND  (charass_alias<? literal("char_id_date_list") ?>.charass_char_id=<? value("char_id_date_list") ?>))
+  LEFT OUTER JOIN char char_alias<? literal("char_id_date_list") ?> ON (charass_alias<? literal("char_id_date_list") ?>.charass_char_id=char_alias<? literal("char_id_date_list") ?>.char_id)
+<? endforeach ?>
 WHERE (true)
-<? if exists("search") ?>
-AND (asset_code ~* <? value("search") ?>
-OR asset_name ~* <? value("search") ?>)
+<? if not exists("retired") ?>
+  AND NOT asset_status = 5
 <? endif ?>
-<? if exists("show_retired") ?>
-AND NOT asset_status = <? value("show_retired") ?>
-<? endif ?>
-order by asset.hierarchy_parent(h.altid)
+GROUP BY h.orderby, h.altid, h.id, asset_code, asset.asset_name, assettype_name , h.value,
+    assetstatus_code, xtindentrole
+ORDER BY h.orderby

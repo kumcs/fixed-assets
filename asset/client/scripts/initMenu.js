@@ -11,7 +11,6 @@ toolbox.menuInsertSeparator(accntsMenu, reptMenu);
 
 // Add Asset actions
 var newAction = assetMenu.addAction(qsTr("New..."), mainwindow);
-var listAction = assetMenu.addAction(qsTr("List..."), mainwindow);
 var locationAction = assetMenu.addAction(qsTr("By Location..."), mainwindow);
 assetMenu.addSeparator();
 var typesAction = assetMenu.addAction(qsTr("Types..."), mainwindow);
@@ -20,10 +19,6 @@ var dispsAction = assetMenu.addAction(qsTr("Dispositions..."), mainwindow);
 newAction.objectName = "fa.new_asset";
 newAction.setData("MaintainFixedAsset");
 newAction.enabled = privileges.value("MaintainFixedAsset");
-
-listAction.objectName = "fa.list_asset";
-listAction.setData("ViewFixedAsset");
-listAction.enabled = privileges.value("ViewFixedAsset");
 
 locationAction.objectName = "fa.asset_location";
 locationAction.setData("ViewFixedAsset");
@@ -37,6 +32,14 @@ dispsAction.objectName = "fa.asset_disp";
 dispsAction.setData("MaintainAssetDisposition");
 dispsAction.enabled = privileges.value("MaintainAssetDisposition");
 
+tmpaction = assetMenu.addAction(qsTr("List..."));
+tmpaction.objectName = "fa.listFixedAssets";
+tmpaction.setData("ViewFixedAsset");
+tmpaction.enabled = privileges.value("ViewFixedAsset");
+tmpaction.triggered.connect(sAssetList);
+assetMenu.removeAction(tmpaction);
+assetMenu.insertAction(mainwindow.findChild("fa.asset_location"), tmpaction);
+
 // Define function(s)
 function sNewAsset()
 {
@@ -47,9 +50,9 @@ function sNewAsset()
   var tmp = toolbox.lastWindow().set(wparams);
 }
 
-function sListAssets()
+function sAssetList()
 {
-  var wind = toolbox.openWindow("assetList", mainwindow);
+  toolbox.newDisplay("dspAssets");
 }
 
 function sListAssetLocations()
@@ -69,7 +72,6 @@ function sAssetDisp()
 
 // Connect Action(s)
 newAction.triggered.connect(sNewAsset);
-listAction.triggered.connect(sListAssets);
 locationAction.triggered.connect(sListAssetLocations);
 typesAction.triggered.connect(sAssetTypes);
 dispsAction.triggered.connect(sAssetDisp);
@@ -84,10 +86,6 @@ function openWindow(uiName)
 function newAsset()
 {
  openWindow('fixedAsset');
-}
-function listAsset()
-{
- openWindow('assetList');
 }
 function assetType()
 {
@@ -131,7 +129,7 @@ function maintenanceSchedule()
 }
 function maintenanceOrder()
 {
- openWindow('maintOrderList');
+  toolbox.newDisplay("dspMaintenanceOrders");
 }
 
 // Add relevant actions (Required to manage extension package actions which won't be defined till later)
@@ -139,7 +137,7 @@ function maintenanceOrder()
 
 // Fixed Asset package
 addAction("fa.new_asset","newAsset","MaintainFixedAsset","MaintainFixedAsset");
-addAction("fa.list_asset","listAsset","ViewFixedAsset","ViewFixedAsset");
+//addAction("fa.listFixedAssets","listAsset","ViewFixedAsset","ViewFixedAsset");
 addAction("fa.asset_types","assetType","MaintainAssetType","MaintainAssetType");
 addAction("fa.asset_disp","assetDisp","MaintainAssetDisposition","MaintainAssetDisposition");
 

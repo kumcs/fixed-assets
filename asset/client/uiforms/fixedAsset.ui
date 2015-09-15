@@ -370,7 +370,7 @@ to be bound by its terms.</comment>
          <enum>Qt::StrongFocus</enum>
         </property>
         <property name="currentIndex">
-         <number>4</number>
+         <number>0</number>
         </property>
         <property name="elideMode">
          <enum>Qt::ElideLeft</enum>

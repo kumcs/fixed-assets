@@ -12,6 +12,7 @@ SELECT createDocType(NULL,
 'asset_name',
 'SELECT id, asset_code, asset_name FROM asset.asset Order BY 2;',
 '',
-'asset_id',
+'id',
 'fixedAsset',
-'');
+'MaintainFixedAsset',
+'FixedAsset');

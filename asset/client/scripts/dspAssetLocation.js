@@ -35,9 +35,6 @@ mywindow.parameterWidget().append(qsTr("Account"), "crmacct", ParameterWidget.Ac
 mywindow.parameterWidget().appendComboBox(qsTr("Location"), "asset_location", locationSql,null,false,null); 
 mywindow.parameterWidget().append(qsTr("Address"), "address", ParameterWidget.Text); 
 
-// Context Menu
-_list["populateMenu(QMenu *,XTreeWidgetItem *, int)"].connect(populateMenu);
-
 function populateMenu(pMenu, pItem, pCol) {
   var mCode
 
@@ -88,7 +85,8 @@ asset.location.assetView = function() {
   asset.location.assetOpen(2,_list.id(), false);
 }
 
-asset.location.assetOpen = function (mode, number, retire) {
+asset.location.assetOpen = function (mode, number, retire) 
+{
   try
   {
     var childwnd = toolbox.openWindow("fixedAsset",mywindow, 0, 1);
@@ -96,7 +94,7 @@ asset.location.assetOpen = function (mode, number, retire) {
     wparams.mode = mode;
     wparams.retire = retire;
     if (mode)
-      wparams.filter = "id = " + number;
+      wparams.assetid = number;
     var tmp = toolbox.lastWindow().set(wparams);
   }
   catch(e)
@@ -120,4 +118,6 @@ asset.location.printAsset = function () {
   toolbox.printReport("FixedAssetDetail", aparams, true);
 }
 
+_list["itemSelected(int)"].connect(asset.location.assetEdit);
+_list["populateMenu(QMenu *,XTreeWidgetItem *, int)"].connect(populateMenu);
 mainwindow["salesOrdersUpdated(int, bool)"].connect(mywindow.sFillList);

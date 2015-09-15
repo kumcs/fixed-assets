@@ -2,7 +2,7 @@
          name="asset"
          developer="Pentuple New Zealand"
          descrip="Fixed Assets"
-         version="1.6.0Beta"
+         version="1.6.0"
          updater="2.2.4">
   <pkgnotes>Fixed Asset Register add-on package for xTuple ERP.
 
@@ -83,9 +83,10 @@
   <loadappscript file="client/scripts/assetList.js"          name="assetList"       order="0" >Fixed Assets</loadappscript>
   <loadappscript file="client/scripts/assetType.js"          name="assetType"       order="0" >Fixed Assets</loadappscript>
   <loadappscript file="client/scripts/dspAssetLocation.js"   name="dspAssetLocation"  order="0" >Fixed Assets</loadappscript>
+  <loadappscript file="client/scripts/dspAssets.js"          name="dspAssets"       order="0" >Fixed Assets</loadappscript>
   <loadappscript file="client/scripts/assetTypeList.js"      name="assetTypeList"   order="0" >Fixed Assets</loadappscript>
-  <loadappscript file="client/scripts/fixedAsset.js"         name="fixedAsset"    order="0" >Fixed Assets</loadappscript>
-  <loadappscript file="client/scripts/initMenu.js"           name="initMenu"      order="2" >Fixed Assets</loadappscript>
+  <loadappscript file="client/scripts/fixedAsset.js"         name="fixedAsset"      order="0" >Fixed Assets</loadappscript>
+  <loadappscript file="client/scripts/initMenu.js"           name="initMenu"        order="2" >Fixed Assets</loadappscript>
 
   <loadimage      file="client/images/depreciation_info_48.png" name="depreciation_info_48"/>
   <loadimage      file="client/images/asset_add_48.png" name="asset_add_48"/> 
