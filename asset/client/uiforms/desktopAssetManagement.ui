@@ -96,7 +96,7 @@
             <string>List Fixed Assets</string>
            </property>
            <property name="actionName" stdset="0">
-            <string>fa.list_asset</string>
+            <string>fa.listFixedAssets</string>
            </property>
           </widget>
          </item>
