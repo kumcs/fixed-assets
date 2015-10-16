@@ -2,7 +2,7 @@
 -- Name:  fetchFixedAssets
 -- Notes: fetch List of Fixed Assets
 SELECT DISTINCT ON (asset_code)
-        0 as seq, a.id as id, a.id as altid, a.asset_code, a.asset_name, 
+        a.id as id, a.id as altid, a.asset_code, a.asset_name, 
 	t.assettype_name as asset_type, assetstatus_code
 <? foreach("char_id_text_list") ?>
   , charass_alias<? literal("char_id_text_list") ?>.charass_value AS char<? literal("char_id_text_list") ?>
@@ -46,4 +46,4 @@ WHERE (true)
   AND asset_type=<? value("type") ?>
 <? endif ?>
 <? literal("charClause") ?>
-order by asset_code, seq
+order by asset_code
