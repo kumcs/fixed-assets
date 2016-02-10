@@ -1,5 +1,5 @@
 /* xTuple Fixed Asset
-// Copyright (c) 2010-2015 Pentuple Ltd. New Zealand (www.pentuple.co.nz)
+// Copyright (c) 2010-2016 Pentuple Ltd. New Zealand (www.pentuple.co.nz)
 // This package is provided free of charge to the xTuple community.
 // If you find any errors or bugs or make any improvements, please submit these back to the author for inclusion in a future release
 */
@@ -122,6 +122,7 @@ function populate()
     _notes.plainText = data.value("asset_comments");
     _purch_price.baseValue = data.value("asset_purch_price");
     _purchase_place.text = data.value("asset_purch_place");
+    _asset_life.value = data.value("asset_life");
     _residual_value.baseValue = data.value("asset_residual_value"); 
     _asset_disposition.setId(data.value("asset_disposition"));
     _parent.setId(data.value("asset_parentid"));	
@@ -232,19 +233,19 @@ var params = new Object();
  params.status = _assetStatus.id();
  if (_assetStatus.id() == 5) params.setretire = true;
  params.brand = _asset_brand.text;
- params.barcode = mywindow.findChild("_asset_barcode").text;
- params.model = mywindow.findChild("_asset_model").text;
- params.serial = mywindow.findChild("_asset_serial").text;
+ params.barcode = _asset_barcode.text;
+ params.model = _asset_model.text;
+ params.serial = _asset_serial.text;
  params.vendor = _vendor.id();
- params.purchase_place = mywindow.findChild("_purchase_place").text; 
- params.purch_date = mywindow.findChild("_purchdate").date;
- params.service = mywindow.findChild("_last_service").date;
+ params.purchase_place = _purchase_place.text; 
+ params.purch_date = _purchdate.date;
+ params.service = _last_service.date;
  params.install_date = _installdate.date;
  params.purch_price = _purch_price.baseValue;
  params.residual_value = _residual_value.baseValue;
  params.purch_date = _purchdate.date;
- params.asset_life = _asset_life.text;
- params.notes = mywindow.findChild("_notes").plainText;
+ params.asset_life = _asset_life.value;
+ params.notes = _notes.plainText;
  params.crmacct = _crmacct.id() == -1 ? null : _crmacct.id();
  params.location = _location.id() == -1 ? null : _location.id();
  params.address = _address.id();
