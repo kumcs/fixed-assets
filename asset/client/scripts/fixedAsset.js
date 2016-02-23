@@ -66,7 +66,13 @@ _location["newID(int)"].connect(updateLocationAddress);
 //_rb2.clicked.connect(selectComments);
 
 // Populate dropdowns
-_assetType.populate("SELECT id, assettype_code as name from asset.asset_type ORDER BY assettype_code");
+var _typeData = toolbox.executeQuery("SELECT id, assettype_code as name from asset.asset_type ORDER BY assettype_code",{});
+if (_typeData.first()) {
+  _assetType.populate(_typeData);
+} else {
+  QMessageBox.critical(mywindow, qsTr("Asset Types"), qsTr("No Asset Types have been maintained. Please set up the Asset Types before creating Fixed Assets."));
+  mywindow.close();
+} 
 _assetStatus.populate("SELECT assetstatus_id, assetstatus_code from asset.asset_status order by assetstatus_order"); 
 _asset_brand.populate("SELECT trunc(random() * 10000 + 1) as id, asset_brand FROM (SELECT DISTINCT asset_brand FROM asset.asset) as qry ORDER BY asset_brand");
 _asset_disposition.populate("SELECT disp_id, disp_code FROM asset.asset_disp ORDER BY disp_code");
@@ -122,7 +128,6 @@ function populate()
     _notes.plainText = data.value("asset_comments");
     _purch_price.baseValue = data.value("asset_purch_price");
     _purchase_place.text = data.value("asset_purch_place");
-    _asset_life.value = data.value("asset_life");
     _residual_value.baseValue = data.value("asset_residual_value"); 
     _asset_disposition.setId(data.value("asset_disposition"));
     _parent.setId(data.value("asset_parentid"));	
@@ -233,19 +238,19 @@ var params = new Object();
  params.status = _assetStatus.id();
  if (_assetStatus.id() == 5) params.setretire = true;
  params.brand = _asset_brand.text;
- params.barcode = _asset_barcode.text;
- params.model = _asset_model.text;
- params.serial = _asset_serial.text;
+ params.barcode = mywindow.findChild("_asset_barcode").text;
+ params.model = mywindow.findChild("_asset_model").text;
+ params.serial = mywindow.findChild("_asset_serial").text;
  params.vendor = _vendor.id();
- params.purchase_place = _purchase_place.text; 
- params.purch_date = _purchdate.date;
- params.service = _last_service.date;
+ params.purchase_place = mywindow.findChild("_purchase_place").text; 
+ params.purch_date = mywindow.findChild("_purchdate").date;
+ params.service = mywindow.findChild("_last_service").date;
  params.install_date = _installdate.date;
  params.purch_price = _purch_price.baseValue;
  params.residual_value = _residual_value.baseValue;
  params.purch_date = _purchdate.date;
- params.asset_life = _asset_life.value;
- params.notes = _notes.plainText;
+ params.asset_life = _asset_life.text;
+ params.notes = mywindow.findChild("_notes").plainText;
  params.crmacct = _crmacct.id() == -1 ? null : _crmacct.id();
  params.location = _location.id() == -1 ? null : _location.id();
  params.address = _address.id();

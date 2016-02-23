@@ -1,7 +1,7 @@
-DELETE FROM source where source_charass = 'FADOC';
+DELETE FROM source where source_name = 'FIXEDASSET';
 
 SELECT createDocType(NULL,
-'FIXEDASSET',
+'FADOC',
 'FADOC',
 'FADOC',
 'Fixed Asset',
