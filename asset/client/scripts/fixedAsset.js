@@ -216,6 +216,9 @@ function sSave(checks) {
       return false;
     }
   }
+  // First save the address
+  _address.save(AddressCluster.CHECK);
+
   // Save the Asset
   if(_fixedAsset.mode == _newMode) {
     tmp = toolbox.executeDbQuery("asset", "insertFixedAsset", getParams());
