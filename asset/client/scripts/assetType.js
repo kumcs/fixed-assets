@@ -20,19 +20,17 @@ var _viewMode = 2;
 var _assetType = new Object;
 var _assettypeid;
 
-_close.clicked.connect(close);
-_save.clicked.connect(saveAsset);
+_glFixedAsset.setType(GLCluster.cAsset);
+_glAccumDepn.setType(GLCluster.cAsset);
+_glDepnExp.setType(GLCluster.cExpense);
+_glGainLoss.setType(GLCluster.cRevenue);
+_glScrap.setType(GLCluster.cExpense);
 
 _assetDepn.populate("SELECT depn_id as id, depn_name as name from asset.asset_depn ORDER BY depn_id");
 _depnperc.setValidator(mainwindow.percentVal());
 
 _accounts.enabled = asset.checkDepn();
 _depreciation.enabled = asset.checkDepn();
-
-function close()
-{
- mywindow.close();
-}
 
 function prepare()
 {
@@ -136,3 +134,5 @@ function getParams()
  return params;
 }
 
+_close.clicked.connect(mywindow.close);
+_save.clicked.connect(saveAsset);
