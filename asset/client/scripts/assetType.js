@@ -115,7 +115,7 @@ function saveAsset()
   }
 
   mainwindow.sSalesOrdersUpdated(-1);
-  close();
+  mywindow.close();
 } 
 
 function getParams()
