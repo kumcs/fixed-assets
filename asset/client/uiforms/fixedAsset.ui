@@ -406,7 +406,7 @@ to be bound by its terms.</comment>
                 <item row="0" column="2">
                  <widget class="XLabel" name="_purchPriceLit">
                   <property name="text">
-                   <string>Purch Place:</string>
+                   <string>Purchase Place:</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
