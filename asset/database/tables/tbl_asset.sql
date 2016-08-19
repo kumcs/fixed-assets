@@ -68,7 +68,6 @@ DROP FUNCTION asset.createtbl_asset();
 REVOKE ALL ON TABLE asset.asset_id_seq FROM PUBLIC;
 GRANT ALL ON TABLE asset.asset_id_seq TO GROUP xtrole;
 GRANT ALL ON TABLE asset.asset_id_seq TO admin;
-GRANT ALL ON TABLE asset.asset_id_seq TO PUBLIC;
 
 REVOKE ALL ON TABLE asset.asset FROM PUBLIC;
 ALTER TABLE asset.asset OWNER TO admin;
