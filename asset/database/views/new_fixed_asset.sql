@@ -14,6 +14,7 @@ CREATE OR REPLACE VIEW asset.new_fixed_asset AS
 
 ALTER TABLE asset.new_fixed_asset
   OWNER TO xtrole;
+GRANT ALL ON TABLE asset.new_fixed_asset TO xtrole;
 
 -- Rule: "_INSERT" ON asset.new_fixed_asset
 

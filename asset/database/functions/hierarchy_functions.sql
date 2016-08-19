@@ -44,6 +44,7 @@ CREATE OR REPLACE VIEW asset.t_hierarchy AS
 
 ALTER TABLE asset.t_hierarchy
   OWNER TO xtrole;
+GRANT ALL ON TABLE asset.t_hierarchy TO xtrole;
 
 DROP TYPE IF EXISTS asset.tp_hierarchy CASCADE;
 

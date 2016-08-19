@@ -2,7 +2,7 @@
          name="asset"
          developer="Pentuple New Zealand"
          descrip="Fixed Assets"
-         version="1.6.4"
+         version="1.6.5"
          updater="2.2.4">
   <pkgnotes>Fixed Asset Register add-on package for xTuple ERP.
 
@@ -66,7 +66,6 @@
 
   <script file="database/misc/schemaComment.sql" />
   <script file="database/misc/asset_list_type.sql" />
-  <initscript file="database/misc/deleteInitMenu.sql" />
 
   <createtable file="database/tables/tbl_asset_status.sql"     name="asset_status"/>
   <createtable file="database/tables/tbl_asset_type.sql"       name="asset_type"/>
@@ -117,7 +116,7 @@
   <finalscript file="database/misc/asset_depn.sql" />
   <finalscript file="database/misc/asset_status.sql" />
   <finalscript file="database/misc/asset_disp.sql" />
-  <finalscript file="database/misc/tidyup_menu.sql" />
+  <finalscript file="database/misc/tidyup_scripts.sql" />
   <finalscript file="database/functions/hierarchy_functions.sql" name="fn_hierarchy_connect_by"/>
   <finalscript file="database/misc/create_asset_source.sql" />
 

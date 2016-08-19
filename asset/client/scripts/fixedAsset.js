@@ -264,6 +264,8 @@ function getParams()
   params.retire_date = _asset_retire.date;
   params.disposition = _asset_disposition.id();
   params.parent = _parent.id() == -1 ? null : _parent.id();
+  if (!_saved)
+    params.updateBookValue = true;
 
   return params;
 }
