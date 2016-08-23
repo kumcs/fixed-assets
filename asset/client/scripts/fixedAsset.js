@@ -168,9 +168,9 @@ function set(input)
      _save.setVisible(false);
    } 
  }
- if ("assetid" in input)
+ if ("assetid" in input || "id" in input)
  {
-   _assetid = input.assetid;
+   _assetid = input.assetid || input.id;
    populate();
  } 
  if ("retire" in input)
