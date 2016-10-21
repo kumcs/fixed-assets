@@ -24,6 +24,7 @@ var _asset_retire = mywindow.findChild("_asset_retire");
 var _asset_disposition = mywindow.findChild("_asset_disposition");
 var _characteristics = mywindow.findChild("_characteristics");
 var _documents = mywindow.findChild("_documents");
+var _comments = mywindow.findChild("_comments");
 var _notes = mywindow.findChild("_notes");
 var _rb1 = mywindow.findChild("_rb1");
 var _rb2 = mywindow.findChild("_rb2");
@@ -43,6 +44,8 @@ var _asset_barcode = mywindow.findChild("_asset_barcode");
 var _asset_serial = mywindow.findChild("_asset_serial");
 var _purchase_place = mywindow.findChild("_purchase_place");
 var _last_service = mywindow.findChild("_last_service");
+var _selNotes = mywindow.findChild("_selNotes");
+var _selComments = mywindow.findChild("_selComments");
 
 var _assetid = -1;
 var _newMode = 0;
@@ -60,10 +63,8 @@ _warranty["valueChanged(int)"].connect(warrantyChanged);
 _assetStatus["currentIndexChanged(QString)"].connect(checkStatus);
 _crmacct["newId(int)"].connect(updateCRMAddress);
 _location["newID(int)"].connect(updateLocationAddress);
-
-// TODO - Add Comments when the Comments Widget allows adhoc types
-//_rb1.clicked.connect(selectNotes);
-//_rb2.clicked.connect(selectComments);
+_selNotes.clicked.connect(selectNotesComments);
+_selComments.clicked.connect(selectNotesComments);
 
 // Populate dropdowns
 var _typeData = toolbox.executeQuery("SELECT id, assettype_code as name from asset.asset_type ORDER BY assettype_code",{});
@@ -79,8 +80,8 @@ _asset_disposition.populate("SELECT disp_id, disp_code FROM asset.asset_disp ORD
 _parent.populate("SELECT id, asset_code || ' - ' || asset_name FROM asset.asset ORDER BY asset_code");
 _location.populate("SELECT location_id, formatLocationName(location_id) AS locationname FROM location");
 
+selectNotesComments();
 _tab.setCurrentIndex(0);
-//selectNotes();
 
 // Local functions
 function prepare()
@@ -168,9 +169,9 @@ function set(input)
      _save.setVisible(false);
    } 
  }
- if ("assetid" in input || "id" in input)
+ if ("assetid" in input)
  {
-   _assetid = input.assetid || input.id;
+   _assetid = input.assetid;
    populate();
  } 
  if ("retire" in input)
@@ -449,6 +450,16 @@ function setDocument()
   _documents.setId(_assetid);
   _characteristics.setType("FADOC");
   _characteristics.setId(_assetid);
+  _comments.setType("FADOC");
+  _comments.setId(_assetid);
+}
+
+function selectNotesComments()
+{
+  if (_selNotes.checked)
+    mywindow.findChild("_notesStack").setCurrentIndex(0);
+  else
+    mywindow.findChild("_notesStack").setCurrentIndex(1);
 }
 
 function closeEvent()

@@ -13,8 +13,8 @@ to be bound by its terms.</comment>
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>752</width>
-    <height>608</height>
+    <width>778</width>
+    <height>643</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -746,15 +746,71 @@ to be bound by its terms.</comment>
           <string>Notes</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_12">
-          <item row="0" column="0">
-           <widget class="XTextEdit" name="_notes">
-            <property name="focusPolicy">
-             <enum>Qt::StrongFocus</enum>
+          <item row="1" column="0">
+           <widget class="QStackedWidget" name="_notesStack">
+            <property name="currentIndex">
+             <number>0</number>
             </property>
-            <property name="fieldName">
-             <string>asset_comments</string>
-            </property>
+            <widget class="QWidget" name="page">
+             <layout class="QVBoxLayout" name="verticalLayout_10">
+              <item>
+               <widget class="XTextEdit" name="_notes">
+                <property name="focusPolicy">
+                 <enum>Qt::StrongFocus</enum>
+                </property>
+                <property name="fieldName">
+                 <string>asset_comments</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="page_2">
+             <layout class="QVBoxLayout" name="verticalLayout_11">
+              <item>
+               <widget class="Comments" name="_comments">
+                <property name="type">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
            </widget>
+          </item>
+          <item row="0" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout_11">
+            <item>
+             <widget class="QRadioButton" name="_selNotes">
+              <property name="text">
+               <string>Notes</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="_selComments">
+              <property name="text">
+               <string>Comments</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_7">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
@@ -964,8 +1020,13 @@ to be bound by its terms.</comment>
   </customwidget>
   <customwidget>
    <class>CharacteristicsWidget</class>
-   <extends></extends>
+   <extends>QWidget</extends>
    <header>characteristicswidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Comments</class>
+   <extends>QWidget</extends>
+   <header>comments.h</header>
   </customwidget>
   <customwidget>
    <class>CRMAcctCluster</class>
@@ -979,7 +1040,7 @@ to be bound by its terms.</comment>
   </customwidget>
   <customwidget>
    <class>CurrDisplay</class>
-   <extends></extends>
+   <extends>QWidget</extends>
    <header>currcluster.h</header>
   </customwidget>
   <customwidget>
@@ -989,7 +1050,7 @@ to be bound by its terms.</comment>
   </customwidget>
   <customwidget>
    <class>Documents</class>
-   <extends></extends>
+   <extends>QWidget</extends>
    <header>documents.h</header>
   </customwidget>
   <customwidget>
@@ -1054,7 +1115,6 @@ to be bound by its terms.</comment>
   <tabstop>_assetlife</tabstop>
   <tabstop>_warranty</tabstop>
   <tabstop>_warranty_exp</tabstop>
-  <tabstop>_notes</tabstop>
   <tabstop>_save</tabstop>
  </tabstops>
  <resources/>
