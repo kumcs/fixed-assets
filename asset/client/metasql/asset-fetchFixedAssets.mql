@@ -37,7 +37,8 @@ JOIN asset.asset_status ON (a.asset_status = assetstatus_id)
 WHERE (true)
 <? if exists("search_pattern") ?>
   AND (asset_code ~* <? value("search_pattern") ?>
-  OR asset_name ~* <? value("search_pattern") ?>)
+  OR asset_name ~* <? value("search_pattern") ?>
+  OR asset_barcode ~* <? value("search_pattern") ?>)
 <? endif ?>
 <? if not exists("retired") ?>
   AND NOT a.asset_status = 5

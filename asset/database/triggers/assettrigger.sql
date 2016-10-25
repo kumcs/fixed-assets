@@ -21,7 +21,16 @@ BEGIN
     END IF;
     IF (OLD.asset_purch_price<>NEW.asset_purch_price) THEN
       PERFORM postComment('ChangeLog', 'FADOC', NEW.id, format('Asset purchase price changed to %s', NEW.asset_purch_price::TEXT));
-    END IF;         
+    END IF;  
+    IF (OLD.asset_location_id<>NEW.asset_location_id OR OLD.asset_crmacct_id<>NEW.asset_crmacct_id) THEN
+      IF (NEW.asset_location_id IS NOT NULL) THEN
+        _commentText := formatLocationName(NEW.asset_location_id);
+        PERFORM postComment('ChangeLog', 'FADOC', NEW.id, format('Asset moved to location %s', _commentText));
+      ELSIF (NEW.asset_crmacct_id IS NOT NULL) THEN
+        _commentText := (SELECT crmacct_number FROM crmacct WHERE crmacct_id=NEW.asset_crmacct_id);
+        PERFORM postComment('ChangeLog', 'FADOC', NEW.id, format('Asset moved to Account %s', _commentText));
+      END IF;
+    END IF;
   END IF;  
   RETURN NEW;
 END;

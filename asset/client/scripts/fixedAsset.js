@@ -46,6 +46,8 @@ var _purchase_place = mywindow.findChild("_purchase_place");
 var _last_service = mywindow.findChild("_last_service");
 var _selNotes = mywindow.findChild("_selNotes");
 var _selComments = mywindow.findChild("_selComments");
+var _locationInt = mywindow.findChild("_locationInt");
+var _locationExt = mywindow.findChild("_locationExt");
 
 var _assetid = -1;
 var _newMode = 0;
@@ -65,6 +67,8 @@ _crmacct["newId(int)"].connect(updateCRMAddress);
 _location["newID(int)"].connect(updateLocationAddress);
 _selNotes.clicked.connect(selectNotesComments);
 _selComments.clicked.connect(selectNotesComments);
+_locationInt.clicked.connect(chooseAssetLocation);
+_locationExt.clicked.connect(chooseAssetLocation);
 
 // Populate dropdowns
 var _typeData = toolbox.executeQuery("SELECT id, assettype_code as name from asset.asset_type ORDER BY assettype_code",{});
@@ -98,6 +102,8 @@ function prepare()
   sSave(false);
   _saved = false;
   setDocument();
+  _locationInt.checked = true;
+  chooseAssetLocation();
 }
 
 function populate()
@@ -148,6 +154,12 @@ function populate()
     _location.enabled = false;
     _address.enabled = false;
   }
+
+  if (_address.id() > 0)
+    _locationExt.checked = true;
+  else
+    _locationInt.checked = true;
+  chooseAssetLocation();
 
   _saved = true;
   setDocument();
@@ -460,6 +472,14 @@ function selectNotesComments()
     mywindow.findChild("_notesStack").setCurrentIndex(0);
   else
     mywindow.findChild("_notesStack").setCurrentIndex(1);
+}
+
+function chooseAssetLocation()
+{
+  if (_locationInt.checked)
+    mywindow.findChild("_locationStack").setCurrentIndex(0);
+  else
+    mywindow.findChild("_locationStack").setCurrentIndex(1);
 }
 
 function closeEvent()

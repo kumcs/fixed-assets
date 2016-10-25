@@ -1,45 +1,12 @@
-CREATE FUNCTION asset.createtbl_asset() RETURNS INTEGER AS $$
-DECLARE
-  _statement TEXT := '';
-  _version   TEXT := '';
-BEGIN
+SELECT xt.create_table('asset_disp', 'asset', false);
 
--- Check existance of table
-  IF (EXISTS(SELECT relname
-               FROM pg_class, pg_namespace
-              WHERE relname='asset_disp'
-                AND relnamespace=pg_namespace.oid
-                AND nspname='asset')) THEN
+SELECT xt.add_column('asset_disp', 'disp_id', 'serial', 'NOT NULL', 'asset', null);
+SELECT xt.add_column('asset_disp', 'disp_code', 'text', '', 'asset', null);
+SELECT xt.add_column('asset_disp', 'disp_descr', 'text', '', 'asset', null);
+SELECT xt.add_column('asset_disp', 'disp_system', 'boolean', '', 'asset', null);
 
-  -- Amend Table
-     SELECT pkghead_version INTO _version
-       FROM pkghead
-       WHERE  pkghead_name = 'asset_disp';
-     IF (_version = '1.0.2') THEN             
-         _statement = '';
-     ELSE
-      -- Do nothing
-     END IF;     
-  ELSE
-  -- Create New table
-    _statement ='CREATE TABLE asset.asset_disp (
-    		    disp_id SERIAL NOT NULL,
-		    disp_code text,
-		    disp_descr text,
-		    disp_system boolean,
-		CONSTRAINT pk_asset_disp PRIMARY KEY (disp_id),
-		CONSTRAINT un_asset_disp UNIQUE (disp_code));';
-
-   END IF;
-
-  EXECUTE _statement;
-
-  RETURN 0;
-END;
-$$ LANGUAGE 'plpgsql';
-
-SELECT asset.createtbl_asset();
-DROP FUNCTION asset.createtbl_asset();
+SELECT xt.add_constraint('asset_disp', 'pk_asset_disp', 'PRIMARY KEY (disp_id)', 'asset');
+SELECT xt.add_constraint('asset_disp', 'un_asset_disp', 'UNIQUE (disp_code)', 'asset');
 
 REVOKE ALL ON TABLE asset.asset_disp_disp_id_seq FROM PUBLIC;
 REVOKE ALL ON TABLE asset.asset_disp FROM PUBLIC;

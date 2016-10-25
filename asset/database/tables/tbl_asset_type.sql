@@ -1,51 +1,18 @@
-CREATE FUNCTION asset.createtbl_asset() RETURNS INTEGER AS $$
-DECLARE
-  _statement TEXT := '';
-  _version   TEXT := '';
-BEGIN
+SELECT xt.create_table('asset_type', 'asset', false);
 
--- Check existance of table
-  IF (EXISTS(SELECT relname
-               FROM pg_class, pg_namespace
-              WHERE relname='asset_type'
-                AND relnamespace=pg_namespace.oid
-                AND nspname='asset')) THEN
+SELECT xt.add_column('asset_type', 'id', 'serial', 'NOT NULL', 'asset', null);
+SELECT xt.add_column('asset_type', 'assettype_code', 'text', '', 'asset', null);
+SELECT xt.add_column('asset_type', 'assettype_name', 'text', '', 'asset', null);
+SELECT xt.add_column('asset_type', 'assettype_depn', 'integer', '', 'asset', null);
+SELECT xt.add_column('asset_type', 'assettype_gl1', 'integer', '', 'asset', null);
+SELECT xt.add_column('asset_type', 'assettype_gl2', 'integer', '', 'asset', null);
+SELECT xt.add_column('asset_type', 'assettype_gl3', 'integer', '', 'asset', null);
+SELECT xt.add_column('asset_type', 'assettype_gl4', 'integer', '', 'asset', null);
+SELECT xt.add_column('asset_type', 'assettype_gl5', 'integer', '', 'asset', null);
+SELECT xt.add_column('asset_type', 'assettype_depnperc', 'numeric(6,2)', '', 'asset', null);
 
-  -- Amend Table
-     SELECT pkghead_version INTO _version
-       FROM pkghead
-       WHERE  pkghead_name = 'asset';
-     IF (_version = '1.0.2') THEN             
-         _statement = '';
-     ELSE
-      -- Do nothing
-     END IF;     
-  ELSE
-  -- Create New table
-    _statement ='CREATE TABLE asset.asset_type (
-		    id serial NOT NULL,
-		    assettype_code text,
-		    assettype_name text,
-		    assettype_depn integer,
-		    assettype_gl1 integer,
-		    assettype_gl2 integer,
-		    assettype_gl3 integer,
-		    assettype_gl4 integer,
-		    assettype_gl5 integer,
-		    assettype_depnperc numeric(6,2),
-		CONSTRAINT pk_assettype PRIMARY KEY (id),
-		CONSTRAINT un_asset_type UNIQUE (assettype_code));';
-
-   END IF;
-
-  EXECUTE _statement;
-
-  RETURN 0;
-END;
-$$ LANGUAGE 'plpgsql';
-
-SELECT asset.createtbl_asset();
-DROP FUNCTION asset.createtbl_asset();
+SELECT xt.add_constraint('asset_type', 'pk_assettype', 'PRIMARY KEY (id)', 'asset');
+SELECT xt.add_constraint('asset_type', 'un_asset_type', 'UNIQUE (assettype_code)', 'asset');
 
 REVOKE ALL ON TABLE asset.asset_type_id_seq FROM PUBLIC;
 REVOKE ALL ON TABLE asset.asset_type FROM PUBLIC;
