@@ -1,69 +1,56 @@
 DROP VIEW IF EXISTS asset.vw_fixed_asset;
 
-CREATE OR REPLACE FUNCTION asset.createtbl_asset() RETURNS INTEGER AS $$
-DECLARE
-  _statement TEXT := '';
-BEGIN
+SELECT xt.create_table('asset', 'asset', false);
 
--- Check existance of table
-  IF (EXISTS(SELECT relname
-               FROM pg_class, pg_namespace
-              WHERE relname='asset'
-                AND relnamespace=pg_namespace.oid
-                AND nspname='asset')) THEN   
-  ELSE
-  -- Create New table
-    _statement = 'CREATE TABLE asset.asset (
-    		    id serial NOT NULL,
-		    asset_code text NOT NULL,
-		    asset_name text NOT NULL,
-		    asset_type integer NOT NULL,
-		    asset_vendor integer,
-		    asset_purch_date date,
-		    asset_purch_price numeric(16,2),
-		    asset_install_date date,
-		    asset_life integer,
-		    asset_residual_value numeric(16,2) DEFAULT 0,
-		    asset_warranty_mth integer,
-		    asset_retire_date date,
-		    asset_address integer,
-		    asset_comments text,
-		    asset_status integer,
-		    asset_brand text,
-		    asset_model text,
-		    asset_serial text,
-		    asset_barcode text,
-		    asset_purch_place text,
-		    asset_warranty_exp date,
-		    asset_last_service date,
-		    asset_warranty boolean,
-		    asset_disposition integer,
-		    asset_retired boolean DEFAULT false,
-		    asset_depreciated boolean DEFAULT false,
-		    asset_bookvalue numeric(10,2),
-		    asset_parentid integer,
-		    asset_item_id integer,
-		  CONSTRAINT pk_asset PRIMARY KEY (id),
-		  CONSTRAINT fk_asset_parentid FOREIGN KEY (asset_parentid)
-		      REFERENCES asset.asset (id) MATCH SIMPLE
-		      ON UPDATE NO ACTION ON DELETE NO ACTION,
-		  CONSTRAINT fk_asset_type FOREIGN KEY (asset_type)
-		      REFERENCES asset.asset_type (id) MATCH SIMPLE
-		      ON UPDATE NO ACTION ON DELETE NO ACTION,
-      CONSTRAINT fk_asset_item_id FOREIGN KEY (asset_item_id)
-		      REFERENCES item (item_id) MATCH SIMPLE
-		      ON UPDATE NO ACTION ON DELETE NO ACTION,
-		  CONSTRAINT un_asset_code UNIQUE (asset_code));';
-  END IF;
+SELECT xt.add_column('asset', 'id', 'serial', 'NOT NULL', 'asset', null);
+SELECT xt.add_column('asset', 'asset_code', 'text', 'NOT NULL', 'asset', null);
+SELECT xt.add_column('asset', 'asset_name', 'text', 'NOT NULL', 'asset', null);
+SELECT xt.add_column('asset', 'asset_type', 'integer', 'NOT NULL', 'asset', null);
+SELECT xt.add_column('asset', 'asset_vendor', 'integer', '', 'asset', null);
+SELECT xt.add_column('asset', 'asset_purch_date', 'date', '', 'asset', null);
+SELECT xt.add_column('asset', 'asset_purch_price', 'numeric(16,2)', '', 'asset', null);
+SELECT xt.add_column('asset', 'asset_install_date', 'date', '', 'asset', null);
+SELECT xt.add_column('asset', 'asset_life', 'integer', '', 'asset', null);
+SELECT xt.add_column('asset', 'asset_residual_value', 'numeric(16,2)', 'DEFAULT 0', 'asset', null);
+SELECT xt.add_column('asset', 'asset_warranty_mth', 'integer', '', 'asset', null);
+SELECT xt.add_column('asset', 'asset_retire_date', 'date', '', 'asset', null);
+SELECT xt.add_column('asset', 'asset_address', 'integer', '', 'asset', null);
+SELECT xt.add_column('asset', 'asset_comments', 'text', '', 'asset', null);
+SELECT xt.add_column('asset', 'asset_status', 'integer', '', 'asset', null);
+SELECT xt.add_column('asset', 'asset_brand', 'text', '', 'asset', null);
+SELECT xt.add_column('asset', 'asset_model', 'text', '', 'asset', null);
+SELECT xt.add_column('asset', 'asset_serial', 'text', '', 'asset', null);
+SELECT xt.add_column('asset', 'asset_barcode', 'text', '', 'asset', null);
+SELECT xt.add_column('asset', 'asset_purch_place', 'text', '', 'asset', null);
+SELECT xt.add_column('asset', 'asset_warranty_exp', 'date', '', 'asset', null);
+SELECT xt.add_column('asset', 'asset_last_service', 'date', '', 'asset', null);
+SELECT xt.add_column('asset', 'asset_warranty', 'boolean', '', 'asset', null);
+SELECT xt.add_column('asset', 'asset_disposition', 'integer', '', 'asset', null);
+SELECT xt.add_column('asset', 'asset_retired', 'boolean', 'DEFAULT false', 'asset', null);
+SELECT xt.add_column('asset', 'asset_depreciated', 'boolean', 'DEFAULT false', 'asset', null);
+SELECT xt.add_column('asset', 'asset_bookvalue', 'numeric(16,2)', '', 'asset', null);
+SELECT xt.add_column('asset', 'asset_parentid', 'integer', '', 'asset', null);
+SELECT xt.add_column('asset', 'asset_item_id', 'integer', '', 'asset', null);
+SELECT xt.add_column('asset', 'asset_crmacct_id', 'integer', '', 'asset', null);
+SELECT xt.add_column('asset', 'asset_location_id', 'integer', '', 'asset', null);
 
-  EXECUTE _statement;
-
-  RETURN 0;
-END;
-$$ LANGUAGE 'plpgsql';
-
-SELECT asset.createtbl_asset();
-DROP FUNCTION asset.createtbl_asset();
+SELECT xt.add_constraint('asset', 'pk_asset', 'PRIMARY KEY (id)', 'asset');
+SELECT xt.add_constraint('asset', 'fk_asset_crmacct_id', 'FOREIGN KEY (asset_crmacct_id)
+      REFERENCES public.crmacct (crmacct_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION', 'asset');
+SELECT xt.add_constraint('asset', 'fk_asset_item_id', 'FOREIGN KEY (asset_item_id)
+      REFERENCES public.item (item_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION', 'asset');
+SELECT xt.add_constraint('asset', 'fk_asset_location_id', 'FOREIGN KEY (asset_location_id)
+      REFERENCES public.location (location_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION', 'asset');
+SELECT xt.add_constraint('asset', 'fk_asset_parentid', 'FOREIGN KEY (asset_parentid)
+      REFERENCES asset.asset (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION', 'asset');
+SELECT xt.add_constraint('asset', 'fk_asset_type', 'FOREIGN KEY (asset_type)
+      REFERENCES asset.asset_type (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION', 'asset');
+SELECT xt.add_constraint('asset', 'un_asset_code', 'UNIQUE (asset_code)', 'asset');
 
 REVOKE ALL ON TABLE asset.asset_id_seq FROM PUBLIC;
 GRANT ALL ON TABLE asset.asset_id_seq TO GROUP xtrole;
@@ -73,70 +60,3 @@ REVOKE ALL ON TABLE asset.asset FROM PUBLIC;
 ALTER TABLE asset.asset OWNER TO admin;
 GRANT ALL ON TABLE asset.asset TO admin;
 GRANT ALL ON TABLE asset.asset TO GROUP xtrole;
-
--- Table Amendments
-DO $$
-DECLARE
-  _statement TEXT := '';
-BEGIN
-
--- Check existence of Parent ID field in table  
-  IF (EXISTS(SELECT column_name
-               FROM information_schema.columns 
-               WHERE table_schema = 'asset' 
-               AND table_name='asset' 
-               AND column_name='asset_parentid')) THEN
-                
-      -- Do Nothing
-      
-  ELSE              
- -- Create New Column
-    _statement = 'ALTER TABLE asset.asset ADD COLUMN asset_parentid integer, 
-		       ADD CONSTRAINT fk_asset_parentid FOREIGN KEY (asset_parentid)
-		          REFERENCES asset.asset (id) MATCH SIMPLE
-		          ON UPDATE NO ACTION ON DELETE NO ACTION;';
-    EXECUTE _statement;
-  END IF;
-  
--- Check existence of Item ID field in table  
-  IF (EXISTS(SELECT column_name
-               FROM information_schema.columns 
-               WHERE table_schema = 'asset' 
-               AND table_name='asset' 
-               AND column_name='asset_item_id')) THEN
-                
-      -- Do Nothing
-      
-  ELSE              
- -- Create New Column
-    _statement = 'ALTER TABLE asset.asset ADD COLUMN asset_item_id integer, 
-		       ADD CONSTRAINT fk_asset_item_id FOREIGN KEY (asset_item_id)
-               REFERENCES item (item_id) MATCH SIMPLE
-               ON UPDATE NO ACTION ON DELETE NO ACTION;';
-    EXECUTE _statement;
-  END IF; 
-
--- Release 1.4.0 Check existence of CRM Account and Location ID field in table  
-  IF (EXISTS(SELECT column_name
-               FROM information_schema.columns 
-               WHERE table_schema = 'asset' 
-               AND table_name='asset' 
-               AND column_name='asset_crmacct_id')) THEN
-                
-      -- Do Nothing
-      
-  ELSE              
- -- Create CRM Account and Location Columns
-    _statement = 'ALTER TABLE asset.asset ADD COLUMN asset_crmacct_id integer, 
-                      ADD COLUMN asset_location_id integer,
-		       ADD CONSTRAINT fk_asset_crmacct_id FOREIGN KEY (asset_crmacct_id)
-               REFERENCES crmacct (crmacct_id) MATCH SIMPLE
-               ON UPDATE NO ACTION ON DELETE NO ACTION,
-		       ADD CONSTRAINT fk_asset_location_id FOREIGN KEY (asset_location_id)
-               REFERENCES location (location_id) MATCH SIMPLE
-               ON UPDATE NO ACTION ON DELETE NO ACTION;';
-    EXECUTE _statement;
-  END IF;  
-   
-END;
-$$;

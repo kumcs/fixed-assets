@@ -2,7 +2,7 @@
          name="asset"
          developer="Pentuple New Zealand"
          descrip="Fixed Assets"
-         version="1.6.5"
+         version="1.7.0"
          updater="2.2.4">
   <pkgnotes>Fixed Asset Register add-on package for xTuple ERP.
 
@@ -18,11 +18,11 @@
   <prerequisite type="Query"
                 name="Check xTuple ERP version">
     <query>
-       SELECT compareVersion(fetchMetricText('ServerVersion'), '4.9.0') >= 0;
+       SELECT compareVersion(fetchMetricText('ServerVersion'), '4.10.0') >= 0;
     </query>
     <message>
       This version of the Fixed Asset package only works with xTuple ERP
-      versions 4.9.0 and greater.
+      versions 4.10.0 and greater.
     </message>
   </prerequisite>
 
@@ -73,9 +73,11 @@
   <createtable file="database/tables/tbl_asset_disp.sql"       name="asset_disp"/>
   <createtable file="database/tables/tbl_asset.sql"            name="asset"/>
 
-  <createview file="database/views/vw_fixed_asset.sql"          name="vw_fixed_asset"/>
+  <createtrigger file="database/triggers/assettrigger.sql"     name="assettrigger"/>
+
+  <createview file="database/views/vw_fixed_asset.sql"         name="vw_fixed_asset"/>
   <createview file="database/views/vw_asset_type.sql"          name="vw_asset_type"/>
-  <createview file="database/views/new_fixed_asset.sql"          name="new_fixed_asset"/>
+  <createview file="database/views/new_fixed_asset.sql"        name="new_fixed_asset"/>
 
   <loadappscript file="client/scripts/asset.js"              name="asset"           order="0" >Fixed Assets</loadappscript>
   <loadappscript file="client/scripts/assetDisp.js"          name="assetDisp"       order="0" >Fixed Assets</loadappscript>
