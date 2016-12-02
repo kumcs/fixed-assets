@@ -26,6 +26,16 @@
     </message>
   </prerequisite>
 
+  <prerequisite type="Query"
+                name="Check Fixed Asset version">
+    <query>
+       SELECT compareVersion((SELECT pkghead_version from pkghead WHERE pkghead_name = 'asset'), '1.7.0') > 0;
+    </query>
+    <message>
+      A superior version of the Asset package has already been installed in this system.  Please check your package. 
+    </message>
+  </prerequisite>
+
   <prerequisite type="license" name="xTuple Concise EULA">
     <message>
       &lt;p>
