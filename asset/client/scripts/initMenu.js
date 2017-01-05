@@ -135,24 +135,32 @@ function maintenanceOrder()
 // Add relevant actions (Required to manage extension package actions which won't be defined till later)
 // We have to add these now as we are displaying a complete desktop
 
+var addAction, addDesktop;
+
+if (addAction)
+{
 // Fixed Asset package
-addAction("fa.new_asset","newAsset","MaintainFixedAsset","MaintainFixedAsset");
+  addAction("fa.new_asset","newAsset","MaintainFixedAsset","MaintainFixedAsset");
 //addAction("fa.listFixedAssets","listAsset","ViewFixedAsset","ViewFixedAsset");
-addAction("fa.asset_types","assetType","MaintainAssetType","MaintainAssetType");
-addAction("fa.asset_disp","assetDisp","MaintainAssetDisposition","MaintainAssetDisposition");
+  addAction("fa.asset_types","assetType","MaintainAssetType","MaintainAssetType");
+  addAction("fa.asset_disp","assetDisp","MaintainAssetDisposition","MaintainAssetDisposition");
 
 // Depreciation Package
-addAction("fa.purchase_asset","purchaseAsset","PurchaseFixedAsset","PurchaseFixedAsset");
-addAction("fa.depreciate_assets","depreciateAsset","DepreciateFixedAsset","DepreciateFixedAsset");
-addAction("fa.post_transactions","postAssetTrans","DepreciateFixedAsset","DepreciateFixedAsset");
-addAction("fa.sell_asset","sellAsset","DisposeFixedAsset","DisposeFixedAsset");
+  addAction("fa.purchase_asset","purchaseAsset","PurchaseFixedAsset","PurchaseFixedAsset");
+  addAction("fa.depreciate_assets","depreciateAsset","DepreciateFixedAsset","DepreciateFixedAsset");
+  addAction("fa.post_transactions","postAssetTrans","DepreciateFixedAsset","DepreciateFixedAsset");
+  addAction("fa.sell_asset","sellAsset","DisposeFixedAsset","DisposeFixedAsset");
 
 // Maintenance Package
-addAction("fa.maintenance_task","maintenanceTask","MaintainMaintenanceTask","MaintainMaintenanceTask");
-addAction("fa.maintenance_plan","maintenancePlan","MaintainMaintenancePlan","MaintainMaintenancePlan");
-addAction("fa.maintenance_class","maintenanceClass","MaintainMaintenanceClass","MaintainMaintenanceClass");
-addAction("fa.maintenance_schedule","maintenanceSchedule","CreateMaintenanceOrder","CreateMaintenanceOrder");
-addAction("fa.maintenance_orders","maintenanceOrder","CreateMaintenanceOrder","CreateMaintenanceOrder");
+  addAction("fa.maintenance_task","maintenanceTask","MaintainMaintenanceTask","MaintainMaintenanceTask");
+  addAction("fa.maintenance_plan","maintenancePlan","MaintainMaintenancePlan","MaintainMaintenancePlan");
+  addAction("fa.maintenance_class","maintenanceClass","MaintainMaintenanceClass","MaintainMaintenanceClass");
+  addAction("fa.maintenance_schedule","maintenanceSchedule","CreateMaintenanceOrder","CreateMaintenanceOrder");
+  addAction("fa.maintenance_orders","maintenanceOrder","CreateMaintenanceOrder","CreateMaintenanceOrder");
+}
 
+if (addDesktop)
+{
 // Add Fixed Asset Desktop
-var setup = addDesktop("desktopAssetManagement", "asset_management_32", "desktopFixedAsset");
+  var setup = addDesktop("desktopAssetManagement", "asset_management_32", "desktopFixedAsset");
+}
