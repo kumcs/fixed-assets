@@ -441,10 +441,13 @@ function checkTag()
  if (_fixedAsset.mode == _viewMode)
    return true;
 
- var p = new Object();
- p.assetid = _assetid; 
- p.code = _assetCode.text;
- var d= toolbox.executeQuery('SELECT asset_code FROM asset.asset WHERE (asset_code = <? value("code") ?>) AND (asset.id <> <? value("assetid") ?>)', p);
+ if (_assetCode.text.length < 1)
+   return true;
+
+ var s = "SELECT asset_code FROM asset.asset WHERE (asset_code = <? value('code') ?>) "
+       + "AND (asset.id <> <? value('assetid') ?>) "
+       + "AND asset_code IS NOT NULL;";
+ var d= toolbox.executeQuery(s, {code: _assetCode.text, assetid: _assetid});
   asset.errorCheck(d);
  if (d.first())
  {
