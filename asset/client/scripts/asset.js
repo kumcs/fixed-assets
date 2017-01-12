@@ -24,6 +24,8 @@ asset.getAssetId = function (assetcode)
   var ret = toolbox.executeQuery(sql, {asset: assetcode});
   if (ret.first())
     return ret.value("ret");
+  else
+    return false;
 }
 
 // Check presence of Depreciation package
