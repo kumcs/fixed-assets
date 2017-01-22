@@ -143,7 +143,7 @@ function assetOpen(mode, number, retire)
   catch(e)
   {
     print(e);
-    QMessageBox.critical(mywindow, "Database Error", "Critical error:" + e);
+    QMessageBox.critical(mywindow, mywindow.windowTitle, qsTr("Exception: ") +e);
   }
 }
 
