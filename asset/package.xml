@@ -2,13 +2,13 @@
          name="asset"
          developer="Pentuple New Zealand"
          descrip="Fixed Assets"
-         version="1.7.0"
+         version="1.7.5"
          updater="2.2.4">
   <pkgnotes>Fixed Asset Register add-on package for xTuple ERP.
 
         This file is part of the Fixed Asset package for xTuple ERP,
         a free and open source Enterprise Resource Planning software suite,
-        Copyright (c) 2010-2016 by Pentuple Consulting Ltd. (New Zealand) www.pentuple.co.nz.
+        Copyright (c) 2010-2017 by Pentuple Consulting Ltd. (New Zealand) www.pentuple.co.nz.
         It is licensed to you under the Common Public Attribution License
         version 1.0, the full text of which (including xTuple-specific Exhibits)
         is available at www.xtuple.com/CPAL.  By using this software, you agree
@@ -29,7 +29,7 @@
   <prerequisite type="Query"
                 name="Check Fixed Asset version">
     <query>
-       SELECT compareVersion(COALESCE((SELECT pkghead_version from pkghead WHERE pkghead_name = 'asset'),'1.0.0'), '1.7.0') &lt;= 0;
+       SELECT compareVersion(COALESCE((SELECT pkghead_version from pkghead WHERE pkghead_name = 'asset'),'1.0.0'), '1.7.5') &lt;= 0;
     </query>
     <message>
       A superior version of the Asset package has already been installed in this system.  Please check your package. 
@@ -41,7 +41,7 @@
       &lt;p>
           This file is part of the Fixed Asset package for xTuple ERP,
           a free and open source Enterprise Resource Planning software suite,
-	        Copyright (c) 2010-2016 by Pentuple Consulting Ltd. (New Zealand) www.pentuple.co.nz.
+	  Copyright (c) 2010-2017 by Pentuple Consulting Ltd. (New Zealand) www.pentuple.co.nz.
           It is licensed to you under the Common Public Attribution License
           version 1.0, the full text of which (including xTuple-specific Exhibits)
           is available at www.xtuple.com/CPAL.  By using this software, you agree
