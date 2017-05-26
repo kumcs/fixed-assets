@@ -2,7 +2,7 @@
          name="asset"
          developer="Pentuple New Zealand"
          descrip="Fixed Assets"
-         version="1.7.5"
+         version="1.8.0"
          updater="2.2.4">
   <pkgnotes>Fixed Asset Register add-on package for xTuple ERP.
 
@@ -29,7 +29,7 @@
   <prerequisite type="Query"
                 name="Check Fixed Asset version">
     <query>
-       SELECT compareVersion(COALESCE((SELECT pkghead_version from pkghead WHERE pkghead_name = 'asset'),'1.0.0'), '1.7.5') &lt;= 0;
+       SELECT compareVersion(COALESCE((SELECT pkghead_version from pkghead WHERE pkghead_name = 'asset'),'1.0.0'), '1.8.0') &lt;= 0;
     </query>
     <message>
       A superior version of the Asset package has already been installed in this system.  Please check your package. 
@@ -46,6 +46,17 @@
           version 1.0, the full text of which (including xTuple-specific Exhibits)
           is available at www.xtuple.com/CPAL.  By using this software, you agree
           to be bound by its terms.
+      &lt;/p>
+    </message>
+  </prerequisite>
+
+  <prerequisite type="license" name="Fixed Asset Package Dependencies">
+    <message>
+      &lt;p>
+          Fixed Asset Commercial (Depreciation/Maintenance) packages rely on features in 
+          this core Fixed Asset package and may be affected if you are upgrading Fixed Asset core.
+          If you have any of these installed, please make sure you also upgrade (or re-apply) 
+          the relevant commercial packages after applying this package.
       &lt;/p>
     </message>
   </prerequisite>

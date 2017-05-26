@@ -1,4 +1,6 @@
 DROP VIEW IF EXISTS asset.vw_fixed_asset;
+DROP VIEW IF EXISTS asset.new_fixed_asset;
+DROP VIEW IF EXISTS assetdepn.depreciated_fixed_asset;
 
 SELECT xt.create_table('asset', 'asset', false);
 
