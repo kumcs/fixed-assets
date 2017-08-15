@@ -1,5 +1,5 @@
 /* xTuple Fixed Asset
-// Copyright (c) 2010-2016 Pentuple Ltd. New Zealand (www.pentuple.co.nz)
+// Copyright (c) 2010-2017 Pentuple Ltd. New Zealand (www.pentuple.co.nz)
 // This package is provided free of charge to the xTuple community.
 // If you find any errors or bugs or make any improvements, please submit these back to the author for inclusion in a future release
 */
@@ -171,19 +171,22 @@ function set(input)
 {
  if ("mode" in input)
  {
-   _fixedAsset.setMode(input.mode);
-   if (input.mode == _newMode)
+   if ([_newMode.toString(), 'new'].indexOf(input.mode.toString()) >= 0)
    {
+     _fixedAsset.setMode(_newMode);
      prepare();
    }
-   if (input.mode == _viewMode)
+   else if ([_viewMode.toString(), 'view'].indexOf(input.mode.toString()) >= 0 )
    {
+     _fixedAsset.setMode(_viewMode);
      _save.setVisible(false);
-   } 
+   }
+   else
+     _fixedAsset.setMode(_editMode);
  }
- if ("assetid" in input)
+ if ("assetid" in input || "id" in input)
  {
-   _assetid = input.assetid;
+   _assetid = input.assetid || input.id;
    populate();
  } 
  if ("retire" in input)
@@ -233,10 +236,10 @@ function sSave(checks) {
   _address.save(AddressCluster.CHECK);
 
   // Save the Asset
-  if(_fixedAsset.mode == _newMode) {
+  if(_fixedAsset.mode == _newMode || _fixedAsset.mode == "new") {
     tmp = toolbox.executeDbQuery("asset", "insertFixedAsset", getParams());
     asset.errorCheck(tmp);
-  } else if(_fixedAsset.mode == _editMode) {
+  } else if(_fixedAsset.mode == _editMode || _fixedAsset.mode == "view") {
     tmp = toolbox.executeDbQuery("asset", "updateFixedAsset", getParams());
     if(asset.errorCheck(tmp))
       _saved = true;
