@@ -15,6 +15,7 @@ SOURCES = \                                   \
         ../scripts/assetType.js               \
         ../scripts/assetTypeList.js           \
         ../scripts/dspAssetLocation.js        \
+        ../scripts/dspAssets.js               \
         ../scripts/fixedAsset.js              \
         ../scripts/initMenu.js
 
