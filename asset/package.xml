@@ -2,7 +2,7 @@
          name="asset"
          developer="Pentuple New Zealand"
          descrip="Fixed Assets"
-         version="1.8.0"
+         version="1.8.1"
          updater="2.2.4">
   <pkgnotes>Fixed Asset Register add-on package for xTuple ERP.
 
@@ -29,10 +29,10 @@
   <prerequisite type="Query"
                 name="Check Fixed Asset version">
     <query>
-       SELECT compareVersion(COALESCE((SELECT pkghead_version from pkghead WHERE pkghead_name = 'asset'),'1.0.0'), '1.8.0') &lt;= 0;
+       SELECT compareVersion(COALESCE((SELECT pkghead_version from pkghead WHERE pkghead_name = 'asset'),'1.0.0'), '1.8.1') &lt;= 0;
     </query>
     <message>
-      A superior version of the Asset package has already been installed in this system.  Please check your package. 
+      A superior version of the Asset package has already been installed in this system.  Please check your package.
     </message>
   </prerequisite>
 
@@ -53,9 +53,9 @@
   <prerequisite type="license" name="Fixed Asset Package Dependencies">
     <message>
       &lt;p>
-          Fixed Asset Commercial (Depreciation/Maintenance) packages rely on features in 
+          Fixed Asset Commercial (Depreciation/Maintenance) packages rely on features in
           this core Fixed Asset package and may be affected if you are upgrading Fixed Asset core.
-          If you have any of these installed, please make sure you also upgrade (or re-apply) 
+          If you have any of these installed, please make sure you also upgrade (or re-apply)
           the relevant commercial packages after applying this package.
       &lt;/p>
     </message>
@@ -63,7 +63,7 @@
 
   <loadpriv name="ViewFixedAsset" module="FixedAsset">
    Allowed to view Fixed Assets
-  </loadpriv>  
+  </loadpriv>
 
   <loadpriv name="MaintainFixedAsset" module="FixedAsset">
    Allowed to create and maintain Fixed Assets
@@ -80,7 +80,7 @@
   <loadpriv name="MaintainAssetDisposition" module="FixedAsset">
    Allowed to Maintain Fixed Asset Dispositions
   </loadpriv>
-   
+
   <loadpriv name="desktopFixedAsset" module="FixedAsset">
    Allowed to access the Fixed Asset Desktop
   </loadpriv>
@@ -112,7 +112,7 @@
   <loadappscript file="client/scripts/initMenu.js"           name="initMenu"        order="20" >Fixed Assets</loadappscript>
 
   <loadimage      file="client/images/depreciation_info_48.png" name="depreciation_info_48"/>
-  <loadimage      file="client/images/asset_add_48.png" name="asset_add_48"/> 
+  <loadimage      file="client/images/asset_add_48.png" name="asset_add_48"/>
   <loadimage      file="client/images/asset_management_32.png" name="asset_management_32"/>
 
   <loadappui file="client/uiforms/assetDisp.ui"              order="0" >Fixed Assets</loadappui>
@@ -122,7 +122,7 @@
   <loadappui file="client/uiforms/assetTypeList.ui"          order="0" >Fixed Assets</loadappui>
   <loadappui file="client/uiforms/fixedAsset.ui"             order="0" >Fixed Assets</loadappui>
   <loadappui file="client/uiforms/desktopAssetManagement.ui" order="0" >Fixed Assets</loadappui>
-  
+
   <loadmetasql file="client/metasql/asset-fetchAssetTypes.mql" >Fixed Assets</loadmetasql>
   <loadmetasql file="client/metasql/asset-fetchFixedAsset.mql" >Fixed Assets</loadmetasql>
   <loadmetasql file="client/metasql/asset-fetchFixedAssets.mql" >Fixed Assets</loadmetasql>
@@ -131,7 +131,7 @@
   <loadmetasql file="client/metasql/asset-FixedAssetReport.mql" >Fixed Assets</loadmetasql>
   <loadmetasql file="client/metasql/asset-insertFixedAsset.mql" >Fixed Assets</loadmetasql>
   <loadmetasql file="client/metasql/asset-updateFixedAsset.mql" >Fixed Assets</loadmetasql>
-  
+
   <loadreport  file="client/reports/FixedAssetByType.xml" >Fixed Assets</loadreport>
   <loadreport  file="client/reports/FixedAssetDetail.xml" >Fixed Assets</loadreport>
   <loadreport  file="client/reports/FixedAssetByLocation.xml" >Fixed Assets</loadreport>
