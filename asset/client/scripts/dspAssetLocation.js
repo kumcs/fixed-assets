@@ -113,9 +113,7 @@ asset.location.retireAsset = function () {
 }
 
 asset.location.printAsset = function () {
-  var aparams = new Object();
-  aparams.asset = _results.id();
-  toolbox.printReport("FixedAssetDetail", aparams, true);
+  toolbox.printReport("FixedAssetDetail", { asset: _list.id() }, true);
 }
 
 _list["itemSelected(int)"].connect(asset.location.assetEdit);
