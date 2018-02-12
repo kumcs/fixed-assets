@@ -85,7 +85,7 @@ function openWindow(uiName)
 
 function newAsset()
 {
- openWindow('fixedAsset');
+  sNewAsset();
 }
 function assetType()
 {
