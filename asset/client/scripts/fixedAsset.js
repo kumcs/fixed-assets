@@ -53,6 +53,7 @@ var _assetid = -1;
 var _newMode = 0;
 var _editMode = 1;
 var _viewMode = 2;
+var _newModeCache = false;
 
 var _populating = false;
 var _saved = false;
@@ -174,6 +175,7 @@ function set(input)
    if ([_newMode.toString(), 'new'].indexOf(input.mode.toString()) >= 0)
    {
      _fixedAsset.setMode(_newMode);
+     _newModeCache = true;
      prepare();
    }
    else if ([_viewMode.toString(), 'view'].indexOf(input.mode.toString()) >= 0 )
