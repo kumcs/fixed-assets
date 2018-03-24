@@ -1,5 +1,5 @@
 # xTuple Fixed Assets (fixed-assets) Release Notes
-## Version 1.8.3 - ???, 2018
+## Version 1.8.3 - March, 2018
 
 ### Summary
 
@@ -19,4 +19,4 @@ extension into sync with the numbering of the commercial extensions.
 
 ### Bug fixes
 
--
+- Fixed issue #[32102](http://www.xtuple.org/xtincident/view/bugs/32102) _Unable to create Characteristics for Fixed Asset._
