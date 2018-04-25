@@ -2,17 +2,15 @@
          name="asset"
          developer="Pentuple New Zealand"
          descrip="Fixed Assets"
-         version="1.8.3"
+         version="1.8.4"
          updater="2.2.4">
   <pkgnotes>Fixed Asset Register add-on package for xTuple ERP.
 
         This file is part of the Fixed Asset package for xTuple ERP,
         a free and open source Enterprise Resource Planning software suite,
-        Copyright (c) 2010-2017 by Pentuple Consulting Ltd. (New Zealand) www.pentuple.co.nz.
-        It is licensed to you under the Common Public Attribution License
-        version 1.0, the full text of which (including xTuple-specific Exhibits)
-        is available at www.xtuple.com/CPAL.  By using this software, you agree
-        to be bound by its terms.
+        Copyright (c) 2010-2018 by Pentuple Consulting Ltd. (New Zealand) www.pentuple.co.nz.
+        Copyright (c) 1999-2018 by OpenMFG LLC, d/b/a xTuple. 
+        See www.xtuple.com/EULA for the full text of the software license.
   </pkgnotes>
 
   <prerequisite type="Query"
@@ -29,7 +27,7 @@
   <prerequisite type="Query"
                 name="Check Fixed Asset version">
     <query>
-       SELECT compareVersion(COALESCE((SELECT pkghead_version from pkghead WHERE pkghead_name = 'asset'),'1.0.0'), '1.8.3') &lt;= 0;
+       SELECT compareVersion(COALESCE((SELECT pkghead_version from pkghead WHERE pkghead_name = 'asset'),'1.0.0'), '1.8.4') &lt;= 0;
     </query>
     <message>
       A superior version of the Asset package has already been installed in this system.  Please check your package.
@@ -42,10 +40,8 @@
           This file is part of the Fixed Asset package for xTuple ERP,
           a free and open source Enterprise Resource Planning software suite,
 	  Copyright (c) 2010-2017 by Pentuple Consulting Ltd. (New Zealand) www.pentuple.co.nz.
-          It is licensed to you under the Common Public Attribution License
-          version 1.0, the full text of which (including xTuple-specific Exhibits)
-          is available at www.xtuple.com/CPAL.  By using this software, you agree
-          to be bound by its terms.
+          Copyright (c) 1999-2018 by OpenMFG LLC, d/b/a xTuple. 
+          See www.xtuple.com/EULA for the full text of the software license.
       &lt;/p>
     </message>
   </prerequisite>
@@ -86,7 +82,6 @@
   </loadpriv>
 
   <script file="database/misc/schemaComment.sql" />
-  <script file="database/misc/asset_list_type.sql" />
 
   <createtable file="database/tables/tbl_asset_status.sql"     name="asset_status"/>
   <createtable file="database/tables/tbl_asset_type.sql"       name="asset_type"/>
