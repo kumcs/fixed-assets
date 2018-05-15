@@ -2,7 +2,7 @@
 <ui version="4.0">
  <comment>This file is part of the xTuple ERP: PostBooks Edition, a free and
 open source Enterprise Resource Planning software suite,
-Copyright (c) 1999-2010 by OpenMFG LLC, d/b/a xTuple.
+Copyright (c) 1999-2018 by OpenMFG LLC, d/b/a xTuple.
 It is licensed to you under the Common Public Attribution License
 version 1.0, the full text of which (including xTuple-specific Exhibits)
 is available at www.xtuple.com/CPAL.  By using this software, you agree
@@ -217,16 +217,6 @@ to be bound by its terms.</comment>
         <item>
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
-           <widget class="QPushButton" name="_close">
-            <property name="text">
-             <string>&amp;Close</string>
-            </property>
-            <property name="shortcut">
-             <string>Esc</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QPushButton" name="_save">
             <property name="focusPolicy">
              <enum>Qt::TabFocus</enum>
@@ -236,6 +226,16 @@ to be bound by its terms.</comment>
             </property>
             <property name="shortcut">
              <string>Ctrl+S</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="_close">
+            <property name="text">
+             <string>&amp;Close</string>
+            </property>
+            <property name="shortcut">
+             <string>Esc</string>
             </property>
            </widget>
           </item>
@@ -1153,22 +1153,6 @@ to be bound by its terms.</comment>
  </tabstops>
  <resources/>
  <connections>
-  <connection>
-   <sender>_close</sender>
-   <signal>clicked()</signal>
-   <receiver>fixedAsset</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>335</x>
-     <y>31</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>246</x>
-     <y>7</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>_fixedAsset</sender>
    <signal>newDataWidgetMapper(XDataWidgetMapper*)</signal>

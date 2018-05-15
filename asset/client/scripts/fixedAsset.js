@@ -59,7 +59,7 @@ var _populating = false;
 var _saved = false;
 
 // Connections
-_close.clicked.connect(mywindow.close);
+_close.clicked.connect(assetClose);
 _save.clicked.connect(saveAsset);
 _assetCode["editingFinished()"].connect(checkTag);
 _warranty["valueChanged(int)"].connect(warrantyChanged);
@@ -488,6 +488,17 @@ function chooseAssetLocation()
     mywindow.findChild("_locationStack").setCurrentIndex(0);
   else
     mywindow.findChild("_locationStack").setCurrentIndex(1);
+}
+
+function assetClose()
+{
+  if (!_saved && _assetCode.text.length > 0)
+  {
+    if (QMessageBox.question(mywindow, qsTr("Unsaved Data"), qsTr("The Asset has not been saved.  Continue closing?"),
+           QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes) == QMessageBox.No)
+      return;
+  }
+  mywindow.close();
 }
 
 function closeEvent()
