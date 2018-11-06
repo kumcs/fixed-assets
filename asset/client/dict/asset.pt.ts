@@ -972,6 +972,14 @@
         <source>Months</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unsaved Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The Asset has not been saved.  Continue closing?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>initMenu</name>
