@@ -2,7 +2,7 @@ SELECT dropIfExists('trigger', 'assettrigger', 'asset');
 
 CREATE OR REPLACE FUNCTION asset._assettrigger()
   RETURNS trigger AS $$
--- Copyright (c) 2016 by OpenMFG LLC, d/b/a xTuple.
+-- Copyright (c) 2016-2018 by OpenMFG LLC, d/b/a xTuple.
 -- See www.xtuple.com/CPAL for the full text of the software license.
 DECLARE
   _commentText TEXT;
