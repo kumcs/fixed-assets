@@ -1,5 +1,5 @@
 # xTuple Fixed Assets (fixed-assets) Release Notes
-## Version 1.8.4 - March, 2018
+## Version 1.8.4 - November, 2018
 
 ### Summary
 
